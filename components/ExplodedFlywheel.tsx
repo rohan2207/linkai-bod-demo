@@ -9,11 +9,15 @@ import { smoothstep01 } from "@/lib/animationUtils";
 type ExplodedFlywheelProps = {
   progress: number;
   activeIndex: number;
+  /** Index of the incoming step during a cross-fade. Same as activeIndex when not transitioning. */
+  nextIndex: number;
+  /** 0 = activeIndex fully highlighted, 1 = nextIndex fully highlighted. */
+  blend: number;
 };
 
 const CARD_ANGLES = FLYWHEEL_STEPS.map((_, i) => (i / FLYWHEEL_STEPS.length) * Math.PI * 2 - Math.PI / 2);
 
-export function ExplodedFlywheel({ progress, activeIndex }: ExplodedFlywheelProps) {
+export function ExplodedFlywheel({ progress, activeIndex, nextIndex, blend }: ExplodedFlywheelProps) {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const wheelWrapRef = useRef<HTMLDivElement>(null);
   const readyRef = useRef(false);
@@ -53,7 +57,10 @@ export function ExplodedFlywheel({ progress, activeIndex }: ExplodedFlywheelProp
         }}
       >
         <div className="rounded-[28px] border border-white/[0.08] bg-[rgba(12,9,22,0.42)] p-3 shadow-[0_0_70px_rgba(98,62,221,0.18)] backdrop-blur-md md:p-4">
-          <FlywheelSvg activeIndex={activeIndex} className="h-auto w-full" />
+          <FlywheelSvg
+            activeIndex={blend > 0.5 ? nextIndex : activeIndex}
+            className="h-auto w-full"
+          />
         </div>
       </div>
 
@@ -64,7 +71,13 @@ export function ExplodedFlywheel({ progress, activeIndex }: ExplodedFlywheelProp
           const y = Math.sin(angle) * radius * 0.7;
           const z = depth - i * 8;
           const drift = (i % 2 === 0 ? 1 : -1) * Math.sin(progress * Math.PI * 5 + i) * 7 * spread;
-          const active = i === activeIndex;
+          // Continuous active weight: interpolates between prev and next step highlight
+          const aw =
+            i === activeIndex && i === nextIndex ? 1 :           // same step, no transition
+            i === activeIndex                    ? (1 - blend) :  // outgoing
+            i === nextIndex                      ? blend       :  // incoming
+            0;                                                     // inactive
+
           return (
             <div
               key={step.id}
@@ -73,9 +86,9 @@ export function ExplodedFlywheel({ progress, activeIndex }: ExplodedFlywheelProp
               }}
               className="absolute left-1/2 top-1/2 min-w-[150px] max-w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/[0.12] bg-[rgba(12,9,22,0.56)] px-4 py-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl"
               style={{
-                transform: `translate3d(${x}px, ${y + drift}px, ${z}px) rotateY(${Math.cos(angle) * 20 * spread}deg) scale(${active ? 1.06 : 0.92 + spread * 0.08})`,
-                opacity: spread < 0.02 ? 0 : (0.55 + spread * 0.45) * (active ? 1 : 0.85),
-                boxShadow: active ? `0 0 36px ${step.color}44, 0 20px 60px rgba(0,0,0,0.5)` : undefined,
+                transform: `translate3d(${x}px, ${y + drift}px, ${z}px) rotateY(${Math.cos(angle) * 20 * spread}deg) scale(${0.92 + spread * 0.08 + aw * 0.06})`,
+                opacity: spread < 0.02 ? 0 : (0.55 + spread * 0.45) * (0.85 + aw * 0.15),
+                boxShadow: aw > 0 ? `0 0 ${Math.round(36 * aw)}px ${step.color}${Math.round(68 * aw).toString(16).padStart(2, "0")}, 0 20px 60px rgba(0,0,0,0.5)` : undefined,
               }}
             >
               <span className="font-sans text-[0.6rem] font-extrabold uppercase tracking-[0.15em] text-[#FF8300]">

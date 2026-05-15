@@ -37,15 +37,17 @@ export function FrameSequence({ frames, progress, accent }: Props) {
       // Raw position within this frame's window (can exceed 0-1)
       const raw = remap(progress, frameStart, frameEnd);
 
-      // Enter: 0→0.3 of the window
-      const enterT = clamp01(remap(raw, 0, 0.3));
-      // Exit: 0.75→1 of the window (last frame never exits)
-      const exitT = i < n - 1 ? clamp01(remap(raw, 0.75, 1.0)) : 0;
+      // Enter: 0→0.20 of the window (faster arrive)
+      const enterT = clamp01(remap(raw, 0, 0.20));
+      // Exit: 0.80→1.0 of the window — symmetric 20% (last frame never exits)
+      // Hold window: 0.20–0.80 = 60% fully visible for board to read
+      const exitT = i < n - 1 ? clamp01(remap(raw, 0.80, 1.0)) : 0;
 
       const opacity = enterT * (1 - exitT);
-      const translateY = (1 - enterT) * 18 - exitT * 10; // enter from below, exit up
-      const scale = 0.97 + enterT * 0.03 - exitT * 0.015;
-      const blur = (1 - enterT) * 4 + exitT * 3;
+      const translateY = (1 - enterT) * 14 - exitT * 8; // enter from below, exit up
+      const scale = 0.97 + enterT * 0.03 - exitT * 0.012;
+      // Lighter blur - 2px entering, 1.5px exiting
+      const blur = (1 - enterT) * 2 + exitT * 1.5;
 
       const el = frameRefs.current[i];
       const cap = captionRefs.current[i];
@@ -56,9 +58,9 @@ export function FrameSequence({ frames, progress, accent }: Props) {
         el.style.pointerEvents = opacity > 0.1 ? "auto" : "none";
       }
       if (cap) {
-        // Caption lags behind slightly for cinematic stagger
-        const capEnter = clamp01(remap(raw, 0.1, 0.4));
-        const capExit = i < n - 1 ? clamp01(remap(raw, 0.78, 1.0)) : 0;
+        // Caption lags slightly behind frame for cinematic stagger
+        const capEnter = clamp01(remap(raw, 0.08, 0.28));
+        const capExit = i < n - 1 ? clamp01(remap(raw, 0.82, 1.0)) : 0;
         cap.style.opacity = String(capEnter * (1 - capExit));
         cap.style.transform = `translateY(${(1 - capEnter) * 10}px)`;
       }
@@ -122,7 +124,7 @@ export function FrameSequence({ frames, progress, accent }: Props) {
                     fill
                     className="object-cover object-top"
                     sizes="(max-width: 768px) 100vw, 60vw"
-                    priority={i === 0}
+                    priority={true}
                   />
                 ) : null}
               </div>

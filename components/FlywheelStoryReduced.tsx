@@ -21,7 +21,7 @@ export function FlywheelStoryReduced() {
         </div>
         <div className="mt-20 space-y-24">
           {FLYWHEEL_STEPS.map((_, i) => (
-            <StepPanel key={FLYWHEEL_STEPS[i].id} index={i} visible />
+            <StepPanel key={FLYWHEEL_STEPS[i].id} prevIndex={i} nextIndex={i} blend={0} visible />
           ))}
         </div>
       </div>

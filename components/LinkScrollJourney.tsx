@@ -561,7 +561,7 @@ export function LinkScrollJourney() {
               className="journey-content-col relative flex min-h-[40vh] w-full flex-1 items-start justify-center md:min-h-0 md:items-center md:pl-2"
             >
               <div className="relative w-full max-w-xl md:max-w-none md:pr-8">
-                <StepPanel index={activeStep} visible />
+                <StepPanel prevIndex={activeStep} nextIndex={activeStep} blend={0} visible />
               </div>
             </div>
           </div>

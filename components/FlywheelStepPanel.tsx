@@ -10,12 +10,6 @@ import { BuildFrame1, BuildFrame2 } from "@/components/BuildFrames";
 import { FLYWHEEL_STEPS, type FlywheelFrame } from "@/lib/flywheelData";
 import { cn } from "@/lib/cn";
 
-/**
- * Build — 2 story frames.
- * Scene 1 is the slide panel itself (headline + bullets animate in).
- * Scene 2: The Scissors — velocity up, diff size down.
- * Scene 3: The Verdict — ELITE + two hard numbers.
- */
 const BUILD_FRAMES: FlywheelFrame[] = [
   {
     component: <BuildFrame1 />,
@@ -29,17 +23,11 @@ const BUILD_FRAMES: FlywheelFrame[] = [
   },
 ];
 
-/**
- * Validate — 2 story frames.
- * Scene 1 is the slide panel itself.
- * Scene 2: The Scale Shift — raw before/after numbers, no chart.
- * Scene 3: The One Number — +690% with minimal supporting bar.
- */
 const VALIDATE_FRAMES: FlywheelFrame[] = [
   {
     component: <ValidateFrame1 />,
     headline: "The scale of the shift.",
-    caption: "Nov 2025 vs May 2026 — every number changed by an order of magnitude.",
+    caption: "Nov 2025 vs May 2026 - every number changed by an order of magnitude.",
   },
   {
     component: <ValidateFrame2 />,
@@ -49,64 +37,107 @@ const VALIDATE_FRAMES: FlywheelFrame[] = [
 ];
 
 type StepPanelProps = {
-  index: number;
-  visible: boolean;
-  /** When true, render in a docked, viewport-fit "slide" layout (no inner scrollbar). */
-  compact?: boolean;
+  /** Index of the outgoing (fully visible) step. */
+  prevIndex: number;
+  /** Index of the incoming (fading in) step. */
+  nextIndex: number;
   /**
-   * 0→1 progress within this step's scroll budget.
-   * Used to drive FrameSequence when step.frames is present.
+   * Scroll-scrubbed blend value: 0 = prevIndex fully visible,
+   * 1 = nextIndex fully visible. Driven directly by scroll position,
+   * identical physics to the line-to-circle morph.
    */
+  blend: number;
+  visible: boolean;
+  compact?: boolean;
+  /** 0→1 within prevIndex's content zone for FrameSequence. */
   frameProgress?: number;
 };
 
-export function StepPanel({ index, visible, compact = false, frameProgress = 0 }: StepPanelProps) {
-  const step = FLYWHEEL_STEPS[index];
-  if (!step) return null;
+export function StepPanel({
+  prevIndex,
+  nextIndex,
+  blend,
+  visible,
+  compact = false,
+  frameProgress = 0,
+}: StepPanelProps) {
+  const prevStep = FLYWHEEL_STEPS[prevIndex];
+  const nextStep = FLYWHEEL_STEPS[nextIndex];
+  if (!prevStep) return null;
 
-  return compact ? (
-    <SlidePanel step={step} visible={visible} frameProgress={frameProgress} />
-  ) : (
-    <ProsePanel step={step} visible={visible} />
+  if (!compact) {
+    // Prose fallback (reduced motion / non-docked) — only show prevStep
+    return <ProsePanel step={prevStep} visible={visible} />;
+  }
+
+  const isTransitioning = prevIndex !== nextIndex && blend > 0;
+
+  return (
+    <div
+      className={cn(
+        "relative w-full",
+        visible ? "pointer-events-auto" : "pointer-events-none opacity-0",
+      )}
+      aria-live="polite"
+    >
+      {/* Outgoing panel — fades out and drifts up as blend increases */}
+      <div
+        style={{
+          opacity: 1 - blend,
+          transform: `translateY(${blend * -6}px)`,
+          // Keep in flow when fully visible; absolute when in transition so both stack
+          position: isTransitioning ? "absolute" : "relative",
+          inset: isTransitioning ? 0 : undefined,
+          pointerEvents: blend > 0.5 ? "none" : "auto",
+          willChange: isTransitioning ? "opacity, transform" : undefined,
+        }}
+      >
+        <SlidePanel step={prevStep} frameProgress={frameProgress} />
+      </div>
+
+      {/* Incoming panel — fades in and rises up as blend increases */}
+      {isTransitioning && nextStep ? (
+        <div
+          style={{
+            opacity: blend,
+            transform: `translateY(${(1 - blend) * 8}px)`,
+            pointerEvents: blend <= 0.5 ? "none" : "auto",
+            willChange: "opacity, transform",
+          }}
+        >
+          {/* nextIndex panel shows at frameProgress=0 since it hasn't started yet */}
+          <SlidePanel step={nextStep} frameProgress={0} />
+        </div>
+      ) : null}
+    </div>
   );
 }
 
 /* -------------------------------------------------------------------------- */
-/* COMPACT SLIDE — designed for the video voiceover                            */
+/* COMPACT SLIDE — one step's content, no opacity logic (parent drives that)  */
 /* -------------------------------------------------------------------------- */
 
 function SlidePanel({
   step,
-  visible,
   frameProgress,
 }: {
   step: (typeof FLYWHEEL_STEPS)[number];
-  visible: boolean;
   frameProgress: number;
 }) {
   const accent = step.color;
   const hasChart = step.chart && step.chart !== "none";
   const headline = step.tagline ?? step.title.replace(/\n/g, " ");
-  // Component-based frames injected at render time (JSX can't live in the data layer)
-  const resolvedFrames =
+
+  const resolvedFrames: FlywheelFrame[] =
     step.id === "build"    ? BUILD_FRAMES    :
     step.id === "validate" ? VALIDATE_FRAMES :
     (step.frames ?? []);
   const hasFrames = resolvedFrames.length > 0;
 
   return (
-    <article
-      className={cn(
-        "flex w-full flex-col gap-5",
-        visible ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
-      )}
-      aria-hidden={!visible}
-    >
+    <article className="flex w-full flex-col gap-5">
       <div className="flex items-center gap-3">
-        <p
-          data-step-layer
-          className="font-sans text-[0.75rem] font-extrabold uppercase tracking-[0.32em] text-[#FF8300]"
-        >
+        <p className="font-sans text-[0.75rem] font-extrabold uppercase tracking-[0.32em] text-[#FF8300]">
           {step.eyebrow}
         </p>
         <span className="badge-shimmer rounded-full px-2.5 py-0.5 font-sans text-[0.65rem] font-bold uppercase tracking-[0.1em] text-[#FF8300]">
@@ -120,24 +151,14 @@ function SlidePanel({
         />
       </div>
 
-      <h2
-        data-step-layer
-        className="font-sans text-[clamp(1.65rem,2.7vw,2.5rem)] font-bold leading-[1.08] tracking-tight text-white"
-      >
+      <h2 className="font-sans text-[clamp(1.65rem,2.7vw,2.5rem)] font-bold leading-[1.08] tracking-tight text-white">
         {headline}
       </h2>
 
-      {/* Scroll-driven frames (e.g. Discover / Pendo) */}
       {hasFrames ? (
-        <div data-step-layer>
-          <FrameSequence
-            frames={resolvedFrames}
-            progress={frameProgress}
-            accent={accent}
-          />
-        </div>
+        <FrameSequence frames={resolvedFrames} progress={frameProgress} accent={accent} />
       ) : step.bullets?.length ? (
-        <ul data-step-layer className="flex flex-col gap-2.5">
+        <ul className="flex flex-col gap-2.5">
           {step.bullets.map((b) => (
             <li
               key={b}
@@ -145,10 +166,7 @@ function SlidePanel({
             >
               <span
                 className="mt-[0.55rem] size-1.5 shrink-0 rounded-full"
-                style={{
-                  background: accent,
-                  boxShadow: `0 0 10px ${accent}99`,
-                }}
+                style={{ background: accent, boxShadow: `0 0 10px ${accent}99` }}
               />
               <span>{b}</span>
             </li>
@@ -157,36 +175,19 @@ function SlidePanel({
       ) : null}
 
       {!hasFrames && step.humanAi ? (
-        <div data-step-layer>
-          <HumanAiSplit data={step.humanAi} />
-        </div>
+        <HumanAiSplit data={step.humanAi} />
       ) : !hasFrames && hasChart ? (
-        <div
-          data-step-layer
-          className="rounded-lg border border-white/[0.06] bg-[rgba(12,9,22,0.55)] p-3"
-        >
-          {step.chart === "pr" ? <ChartPrThroughput compact /> : null}
-          {step.chart === "tests" ? <ChartTestGrowth compact /> : null}
-          {step.chart === "deploy" ? <ChartDeployLead compact /> : null}
+        <div className="rounded-lg border border-white/[0.06] bg-[rgba(12,9,22,0.55)] p-3">
+          {step.chart === "pr"     ? <ChartPrThroughput compact /> : null}
+          {step.chart === "tests"  ? <ChartTestGrowth compact />   : null}
+          {step.chart === "deploy" ? <ChartDeployLead compact />   : null}
           {step.legend?.length ? (
             <div className="mt-1 flex flex-wrap gap-3 text-[0.62rem] text-[rgba(209,193,255,0.45)]">
               {step.legend.map((leg) => (
                 <div key={leg.text} className="flex items-center gap-2">
-                  {leg.type === "dot" ? (
-                    <span
-                      className="size-2 shrink-0 rounded-full"
-                      style={{ background: leg.color }}
-                    />
-                  ) : null}
-                  {leg.type === "line" ? (
-                    <span
-                      className="h-0.5 w-4 shrink-0 rounded-sm"
-                      style={{ background: leg.color }}
-                    />
-                  ) : null}
-                  {leg.type === "dash" ? (
-                    <span className="w-4 shrink-0 border-t border-dashed border-[rgba(209,193,255,0.25)]" />
-                  ) : null}
+                  {leg.type === "dot"  ? <span className="size-2 shrink-0 rounded-full" style={{ background: leg.color }} /> : null}
+                  {leg.type === "line" ? <span className="h-0.5 w-4 shrink-0 rounded-sm" style={{ background: leg.color }} /> : null}
+                  {leg.type === "dash" ? <span className="w-4 shrink-0 border-t border-dashed border-[rgba(209,193,255,0.25)]" /> : null}
                   <span>{leg.text}</span>
                 </div>
               ))}
@@ -219,7 +220,7 @@ function SlidePanel({
 }
 
 /* -------------------------------------------------------------------------- */
-/* PROSE FALLBACK — used in reduced-motion / non-compact contexts              */
+/* PROSE FALLBACK — reduced-motion / non-compact contexts                      */
 /* -------------------------------------------------------------------------- */
 
 function ProsePanel({
@@ -266,7 +267,7 @@ function ProsePanel({
           <div className="w-0.5 shrink-0 rounded-sm bg-gradient-to-b from-[#623EDD] to-[#D551C9]" />
           <div className="min-w-0">
             <p className="mb-0.5 text-[0.55rem] font-medium uppercase tracking-[0.22em] text-[#F7B334]">
-              {step.personaRole} · <span className="text-white/90">{step.personaName}</span>
+              {step.personaRole} - <span className="text-white/90">{step.personaName}</span>
             </p>
             <p className="text-[0.82rem] font-light leading-snug text-[rgba(240,236,255,0.78)]">
               {step.personaLine}
@@ -283,9 +284,9 @@ function ProsePanel({
 
       {hasChart ? (
         <div className="rounded-lg border border-white/[0.06] bg-[rgba(12,9,22,0.55)] p-3">
-          {step.chart === "pr" ? <ChartPrThroughput /> : null}
-          {step.chart === "tests" ? <ChartTestGrowth /> : null}
-          {step.chart === "deploy" ? <ChartDeployLead /> : null}
+          {step.chart === "pr"     ? <ChartPrThroughput /> : null}
+          {step.chart === "tests"  ? <ChartTestGrowth />   : null}
+          {step.chart === "deploy" ? <ChartDeployLead />   : null}
         </div>
       ) : (
         <AssetStage
