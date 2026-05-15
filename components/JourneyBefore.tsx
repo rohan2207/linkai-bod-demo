@@ -41,11 +41,16 @@ const N = OLD_WAY_STAGES.length; // 6
 const LINE_Y = CY1;
 const lineXs = Array.from({ length: N }, (_, i) => lerp(50, W - 50, i / (N - 1)));
 
-/** Generate 6 clock positions for a circle centred at (cx, cy) with radius r */
+/** Generate 6 clock positions for a circle centred at (cx, cy) with radius r.
+ *  Coordinates are rounded to 2 dp to prevent SSR/client floating-point
+ *  mismatch hydration warnings. */
 function makeCP(cx: number, cy: number, r: number) {
   return Array.from({ length: N }, (_, i) => {
     const angle = Math.PI + (i / N) * 2 * Math.PI; // 9-o'clock start, CW
-    return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+    return {
+      x: Math.round((cx + r * Math.cos(angle)) * 100) / 100,
+      y: Math.round((cy + r * Math.sin(angle)) * 100) / 100,
+    };
   });
 }
 
