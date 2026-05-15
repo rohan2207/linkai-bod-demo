@@ -6,7 +6,6 @@ import { Nav } from "@/components/Nav";
 import { OutroScene } from "@/components/OutroScene";
 import { ProofCharts } from "@/components/ProofCharts";
 import { ScrollProgress } from "@/components/ScrollProgress";
-import { TextFlywheelTransition } from "@/components/TextFlywheelTransition";
 import { useScrollProgress } from "@/lib/useScrollProgress";
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
       <Nav />
       <main className="relative z-[1]">
         <HeroScene progress={sceneProgress.hero} />
-        <TextFlywheelTransition progress={sceneProgress.textTransition} />
         <FlywheelStory progress={sceneProgress.flywheel} />
         <ProofCharts progress={sceneProgress.proof} />
         <OutroScene progress={sceneProgress.outro} />

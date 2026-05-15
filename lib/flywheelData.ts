@@ -123,13 +123,12 @@ export const OUTRO_COPY = {
 
 export const STORY_SCENE_VH = {
   hero: 140,
-  textTransition: 100,
   flywheel: 580,
   proof: 140,
   outro: 100,
 } as const;
 
-export const STORY_SCENE_ORDER = ["hero", "textTransition", "flywheel", "proof", "outro"] as const;
+export const STORY_SCENE_ORDER = ["hero", "flywheel", "proof", "outro"] as const;
 export type StorySceneId = (typeof STORY_SCENE_ORDER)[number];
 
 export const FLYWHEEL_STEPS: FlywheelStep[] = [

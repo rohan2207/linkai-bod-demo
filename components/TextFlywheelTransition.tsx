@@ -53,7 +53,7 @@ export function TextFlywheelTransition({ progress }: TextFlywheelTransitionProps
   const p = smoothstep01(progress);
 
   return (
-    <section className="relative border-y border-[var(--ln)]" style={{ minHeight: `${STORY_SCENE_VH.textTransition}vh` }}>
+    <section className="relative border-y border-[var(--ln)]" style={{ minHeight: "100vh" }}>
       <div className="sticky top-0 flex min-h-[100dvh] items-center justify-center overflow-hidden px-6 md:px-[8vw]">
         <div className="absolute inset-0 bg-gradient-to-br from-[rgba(98,62,221,0.08)] to-[rgba(213,81,201,0.04)]" />
         <div ref={stageRef} className="relative z-[2] max-w-[980px] text-center [perspective:1300px] [transform-style:preserve-3d]">
