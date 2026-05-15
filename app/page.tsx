@@ -2,7 +2,6 @@
 
 import { FlywheelStory } from "@/components/FlywheelStory";
 import { HeroScene } from "@/components/HeroScene";
-import { HeroStat } from "@/components/HeroStat";
 import { Nav } from "@/components/Nav";
 import { OutroScene } from "@/components/OutroScene";
 import { ProofCharts } from "@/components/ProofCharts";
@@ -22,7 +21,6 @@ export default function Home() {
         <HeroScene progress={sceneProgress.hero} />
         <TextFlywheelTransition progress={sceneProgress.textTransition} />
         <FlywheelStory progress={sceneProgress.flywheel} />
-        <HeroStat />
         <ProofCharts progress={sceneProgress.proof} />
         <OutroScene progress={sceneProgress.outro} />
       </main>
