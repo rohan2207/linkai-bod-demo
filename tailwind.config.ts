@@ -8,9 +8,28 @@ export default {
   ],
   theme: {
     extend: {
+      keyframes: {
+        drift: {
+          "0%": { transform: "translate(0,0) scale(1)" },
+          "100%": { transform: "translate(30px,40px) scale(1.08)" },
+        },
+      },
+      animation: {
+        drift: "drift 18s ease-in-out infinite alternate",
+        "drift-slow": "drift 24s ease-in-out infinite alternate",
+        "drift-mid": "drift 22s ease-in-out infinite alternate",
+      },
+      fontFamily: {
+        sans: ["var(--font-space)", "system-ui", "sans-serif"],
+        serif: ["var(--font-cormorant)", "Georgia", "serif"],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        ink: "#0c0916",
+        mist: "#f0ecff",
+        pm: "#623edd",
+        pp: "#d551c9",
+        pa: "#f7b334",
+        pg: "#4ade80",
       },
     },
   },

@@ -3,19 +3,79 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --pm: #623edd;
+  --pp: #d551c9;
+  --pa: #f7b334;
+  --pg: #4ade80;
+  --nb: #0c0916;
+  --ow: #f0ecff;
+  --mu: rgba(209, 193, 255, 0.45);
+  --ln: rgba(209, 193, 255, 0.12);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* LinkScrollJourney: true left | right ~25% / ~75% when docked (not stacked) */
+.journey-stage {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .journey-stage.journey-docked {
+    display: grid;
+    grid-template-columns: minmax(200px, 1fr) minmax(0, 3fr);
+    column-gap: clamp(1rem, 2.5vw, 2.25rem);
+    align-items: start;
+    justify-items: stretch;
+  }
+
+  .journey-stage.journey-docked .journey-wheel-col {
+    justify-self: stretch;
+    min-height: min(76vh, 920px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+  }
+
+  .journey-stage.journey-docked .journey-content-col {
+    min-height: min(76vh, 920px);
+    width: 100%;
+    max-width: none;
+    align-self: start;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+
+  .journey-stage.journey-docked .journey-svg-box {
+    width: min(44vmin, 100%);
+    max-width: none;
+  }
+
+  .journey-stage.journey-docked .journey-wheel-glass {
+    box-shadow: 0 0 80px rgba(155, 109, 255, 0.22);
+  }
 }
