@@ -67,7 +67,7 @@ export function OutroScene({ progress }: OutroSceneProps) {
 
           <p
             ref={(node) => {
-              lineRefs.current[3] = node;
+              lineRefs.current[4] = node;
             }}
             className="mt-8 font-body text-[1.25rem] font-semibold text-[#D1C1FF]"
             style={{ opacity: 0 }}
@@ -77,7 +77,7 @@ export function OutroScene({ progress }: OutroSceneProps) {
 
           <p
             ref={(node) => {
-              lineRefs.current[4] = node;
+              lineRefs.current[5] = node;
             }}
             className="mt-12 font-body text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-[rgba(209,193,255,0.25)]"
             style={{ opacity: 0 }}
