@@ -170,60 +170,62 @@ export function BuildFrame1() {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────── */
-/* Frame 2 — The Verdict                                                       */
-/* No chart. Full-frame centered card. "ELITE" + two supporting facts.        */
+/* Frame 2 — The Multiplier                                                    */
+/* Full-frame centered stat: 10x deployment increase, 2 supporting facts.     */
 /* ─────────────────────────────────────────────────────────────────────────── */
 export function BuildFrame2() {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-6 py-6">
-      {/* ELITE badge */}
-      <div className="flex flex-col items-center gap-3">
-        <div
-          className="rounded-xl px-7 py-2"
+    <div className="flex h-full w-full flex-col items-center justify-center gap-5 px-6 py-6">
+      {/* 10x headline */}
+      <div className="flex flex-col items-center gap-2">
+        <p className="text-[0.6rem] font-semibold uppercase tracking-[0.32em] text-[rgba(209,193,255,0.38)]">
+          Deployment frequency
+        </p>
+        <p
+          className="font-sans font-extrabold leading-none"
           style={{
-            background: `linear-gradient(135deg, ${GREEN}22, ${GREEN}0a)`,
-            border: `1px solid ${GREEN}55`,
-            boxShadow: `0 0 40px ${GREEN}22, inset 0 1px 0 ${GREEN}33`,
+            fontSize: "clamp(4rem,9vw,6.5rem)",
+            background: `linear-gradient(135deg, ${PURPLE}, #D551C9)`,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            filter: `drop-shadow(0 0 28px ${PURPLE}66)`,
           }}
         >
-          <p
-            className="font-sans text-[clamp(2.2rem,5vw,3.8rem)] font-bold leading-none tracking-widest"
-            style={{ color: GREEN, textShadow: `0 0 32px ${GREEN}88` }}
-          >
-            ELITE
-          </p>
-        </div>
-        <p className="text-[0.65rem] font-medium uppercase tracking-[0.3em] text-[rgba(209,193,255,0.4)]">
-          DORA performance classification
+          10×
+        </p>
+        <p className="text-[0.78rem] font-semibold text-[rgba(209,193,255,0.65)]">
+          more releases than two years ago
         </p>
       </div>
 
+      {/* Divider */}
+      <div className="h-px w-16" style={{ background: "rgba(209,193,255,0.1)" }} />
+
       {/* Two supporting facts */}
-      <div className="flex gap-6">
+      <div className="flex gap-8">
         <div className="flex flex-col items-center gap-1 text-center">
           <p
-            className="font-sans text-[clamp(1.8rem,3.5vw,2.6rem)] font-bold leading-none"
-            style={{ color: "#60A5FA" }}
-          >
-            4.3 days
-          </p>
-          <p className="text-[0.6rem] uppercase tracking-[0.18em] text-[rgba(209,193,255,0.38)]">
-            Mean lead time
-          </p>
-        </div>
-        <div
-          className="w-px self-stretch"
-          style={{ background: "rgba(209,193,255,0.1)" }}
-        />
-        <div className="flex flex-col items-center gap-1 text-center">
-          <p
-            className="font-sans text-[clamp(1.8rem,3.5vw,2.6rem)] font-bold leading-none"
+            className="font-sans text-[clamp(1.6rem,3vw,2.2rem)] font-bold leading-none"
             style={{ color: PURPLE }}
           >
-            121
+            ~2 / wk
           </p>
-          <p className="text-[0.6rem] uppercase tracking-[0.18em] text-[rgba(209,193,255,0.38)]">
-            Production deploys
+          <p className="mt-1 text-[0.58rem] uppercase tracking-[0.18em] text-[rgba(209,193,255,0.35)]">
+            2022 – 2024
+          </p>
+        </div>
+        <div className="flex items-center">
+          <span className="text-[1.1rem] text-[rgba(209,193,255,0.25)]">→</span>
+        </div>
+        <div className="flex flex-col items-center gap-1 text-center">
+          <p
+            className="font-sans text-[clamp(1.6rem,3vw,2.2rem)] font-bold leading-none"
+            style={{ color: GREEN }}
+          >
+            20 / wk
+          </p>
+          <p className="mt-1 text-[0.58rem] uppercase tracking-[0.18em] text-[rgba(209,193,255,0.35)]">
+            Peak 2026
           </p>
         </div>
       </div>
