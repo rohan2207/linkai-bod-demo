@@ -9,7 +9,6 @@ import {
   FLYWHEEL_STEPS,
   JOURNEY_ADOPTION_LINE,
   JOURNEY_AFTER_EYEBROW,
-  JOURNEY_AFTER_LINE,
   STORY_SCENE_VH,
 } from "@/lib/flywheelData";
 import { clamp01, remap, smoothstep01 } from "@/lib/animationUtils";
@@ -19,9 +18,8 @@ type FlywheelStoryProps = {
 };
 
 /** Progress bands within the flywheel scene (0..1). */
-const P_BEFORE_END = 0.22;
-const P_MORPH_END  = 0.32;
-const P_DOCK_START = 0.52;
+const P_MORPH_END  = 0.44;
+const P_DOCK_START = 0.60;
 const P_DOCK_END   = 1.0;
 
 /**
@@ -99,10 +97,11 @@ export function FlywheelStory({ progress }: FlywheelStoryProps) {
 
   // Opacity layers
   const beforeLayerOpacity = showBefore ? 1 : Math.max(0, 1 - (progress - P_MORPH_END) * 22);
-  const wheelLayerOpacity  = Math.max(0, Math.min(1, (progress - 0.37) / 0.10));
+  // Wheel fades in starting at P_MORPH_END so it overlaps the JourneyBefore exit
+  const wheelLayerOpacity  = Math.max(0, Math.min(1, (progress - 0.42) / 0.10));
   const afterHeaderOpacity = Math.max(
     0,
-    Math.min(1, (progress - 0.35) / 0.08) * (1 - smoothstep01(remap(progress, P_DOCK_START - 0.04, P_DOCK_END)) * 0.5),
+    Math.min(1, (progress - 0.45) / 0.08) * (1 - smoothstep01(remap(progress, P_DOCK_START - 0.04, P_DOCK_END)) * 0.5),
   );
 
   return (
@@ -129,8 +128,7 @@ export function FlywheelStory({ progress }: FlywheelStoryProps) {
               style={{ opacity: afterHeaderOpacity }}
             >
               <p className="font-sans text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-[#D551C9]">{JOURNEY_AFTER_EYEBROW}</p>
-              <p className="mt-3 font-sans text-[clamp(1.35rem,2.5vw,2rem)] font-bold leading-snug text-[#D1C1FF]">{JOURNEY_AFTER_LINE}</p>
-              <p className="mx-auto mt-4 max-w-[620px] font-body text-[1rem] font-normal text-[rgba(209,193,255,0.62)]">{JOURNEY_ADOPTION_LINE}</p>
+              <p className="mx-auto mt-3 max-w-[620px] font-body text-[1rem] font-normal text-[rgba(209,193,255,0.62)]">{JOURNEY_ADOPTION_LINE}</p>
             </div>
           ) : null}
 

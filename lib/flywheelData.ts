@@ -124,7 +124,7 @@ export const OUTRO_COPY = {
 export const STORY_SCENE_VH = {
   hero: 140,
   textTransition: 100,
-  flywheel: 520,
+  flywheel: 580,
   proof: 140,
   outro: 100,
 } as const;
