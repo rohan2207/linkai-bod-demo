@@ -12,28 +12,33 @@ type Props = {
 /* ─────────────────────────────────────────────────────────────────────────── */
 /* Layout constants                                                             */
 /* ─────────────────────────────────────────────────────────────────────────── */
-const W   = 800;
-const H   = 420;
-const CY  = 210; // shared vertical centre for all circles
+const W  = 800;
+const H  = 410;
 
 /**
- * 4 circles, same radius, arranged horizontally.
- * R=72, diameter=144, gap between edges=44 → total span=4*144+3*44=708.
- * Left/right margin=(800-708)/2=46.
+ * 4 circles, same radius, arranged horizontally with ascending CY so each
+ * step arrow visually climbs upward — representing improvement each cycle.
+ * R=72, diameter=144, gap between edges=44.
  */
 const R    = 72;
 const GAP  = 44;
 const CIRC = 2 * Math.PI * R;
 
-const CX1 = 46 + R;           //  118
-const CX2 = CX1 + 2 * R + GAP; //  306
-const CX3 = CX2 + 2 * R + GAP; //  494
-const CX4 = CX3 + 2 * R + GAP; //  682
+const CX1 = 46 + R;             //  118
+const CX2 = CX1 + 2 * R + GAP;  //  306
+const CX3 = CX2 + 2 * R + GAP;  //  494
+const CX4 = CX3 + 2 * R + GAP;  //  682
+
+// Each cycle sits 38px higher than the previous (ascending = improving)
+const CY1 = 280;
+const CY2 = 242;
+const CY3 = 204;
+const CY4 = 166;
 
 const N = OLD_WAY_STAGES.length; // 6
 
 /** Horizontal positions for the initial draw-in line (Phase 0, full width) */
-const LINE_Y = CY;
+const LINE_Y = CY1;
 const lineXs = Array.from({ length: N }, (_, i) => lerp(50, W - 50, i / (N - 1)));
 
 /** Generate 6 clock positions for a circle centred at (cx, cy) with radius r */
@@ -44,16 +49,35 @@ function makeCP(cx: number, cy: number, r: number) {
   });
 }
 
-const cp1 = makeCP(CX1, CY, R);
-const cp2 = makeCP(CX2, CY, R);
-const cp3 = makeCP(CX3, CY, R);
-const cp4 = makeCP(CX4, CY, R);
+const cp1 = makeCP(CX1, CY1, R);
+const cp2 = makeCP(CX2, CY2, R);
+const cp3 = makeCP(CX3, CY3, R);
+const cp4 = makeCP(CX4, CY4, R);
 
-/* Arrow tip positions (edge-to-edge between adjacent circles) */
+/**
+ * Builds a step-function SVG path: go right to midpoint, then curve up,
+ * then go right to destination. The rounded corner radius keeps it smooth.
+ */
+function stepPath(x1: number, y1: number, x2: number, y2: number, cr = 12): string {
+  const midX = (x1 + x2) / 2;
+  const dy = y1 - y2; // positive = going up (improvement)
+  if (dy < 1) return `M ${x1},${y1} L ${x2},${y2}`;
+  const r = Math.min(cr, dy / 2, (x2 - x1) / 4);
+  return [
+    `M ${x1},${y1}`,
+    `L ${midX - r},${y1}`,
+    `Q ${midX},${y1} ${midX},${y1 - r}`,
+    `L ${midX},${y2 + r}`,
+    `Q ${midX},${y2} ${midX + r},${y2}`,
+    `L ${x2},${y2}`,
+  ].join(" ");
+}
+
+/* Arrow endpoint positions — now each arrow steps from lower CY to higher CY */
 const ARR = [
-  { x1: CX1 + R + 6, x2: CX2 - R - 6, y: CY },
-  { x1: CX2 + R + 6, x2: CX3 - R - 6, y: CY },
-  { x1: CX3 + R + 6, x2: CX4 - R - 6, y: CY },
+  { x1: CX1 + R + 6, y1: CY1, x2: CX2 - R - 6, y2: CY2 },
+  { x1: CX2 + R + 6, y1: CY2, x2: CX3 - R - 6, y2: CY3 },
+  { x1: CX3 + R + 6, y1: CY3, x2: CX4 - R - 6, y2: CY4 },
 ];
 
 /* ─────────────────────────────────────────────────────────────────────────── */
@@ -229,7 +253,7 @@ export function JourneyBefore({ progress }: Props) {
         />
         {/* Faint circle guide for C1 */}
         <circle
-          cx={CX1} cy={CY} r={R}
+          cx={CX1} cy={CY1} r={R}
           fill="none" stroke="rgba(209,193,255,0.07)" strokeWidth={1}
           opacity={morph1}
         />
@@ -250,7 +274,7 @@ export function JourneyBefore({ progress }: Props) {
         {/* Closing arc for C1 once morph ≈ 1 */}
         {closingOp > 0 && (
           <circle
-            cx={CX1} cy={CY} r={R}
+            cx={CX1} cy={CY1} r={R}
             fill="none" stroke="url(#jb-grad)"
             strokeWidth={2} strokeLinecap="round"
             opacity={closingOp} filter="url(#jb-glow)"
@@ -293,7 +317,7 @@ export function JourneyBefore({ progress }: Props) {
 
         {/* C1 cycle label */}
         <text
-          x={CX1} y={CY - R - 14}
+          x={CX1} y={CY1 - R - 14}
           textAnchor="middle" fontSize={10}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={700} fill="#F87171"
@@ -301,29 +325,20 @@ export function JourneyBefore({ progress }: Props) {
         >
           Cycle 1
         </text>
-        <text
-          x={CX1} y={CY + R + 22}
-          textAnchor="middle" fontSize={9}
-          fontFamily="'Montserrat', system-ui, sans-serif"
-          fontWeight={600} fill="rgba(240,236,255,0.5)"
-          opacity={morph1 * g1op}
-        >
-          12 wks
-        </text>
-
         {/* ════════════════════════════════════════════════════════ */}
-        {/* ARROW 1 → C2                                           */}
+        {/* ARROW 1 → C2  (step-up path)                          */}
         {/* ════════════════════════════════════════════════════════ */}
-        <line
-          x1={ARR[0].x1} y1={ARR[0].y} x2={ARR[0].x2} y2={ARR[0].y}
+        <path
+          d={stepPath(ARR[0].x1, ARR[0].y1, ARR[0].x2, ARR[0].y2)}
+          fill="none"
           stroke="rgba(209,193,255,0.5)" strokeWidth={1.5}
           markerEnd="url(#arrowhead)"
           opacity={arr1T}
-          strokeDasharray="3 4"
         />
         <text
-          x={(ARR[0].x1 + ARR[0].x2) / 2} y={ARR[0].y - 9}
-          textAnchor="middle" fontSize={8}
+          x={(ARR[0].x1 + ARR[0].x2) / 2 + 10}
+          y={(ARR[0].y1 + ARR[0].y2) / 2}
+          textAnchor="start" fontSize={8}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={600} letterSpacing="0.08em"
           fill="rgba(209,193,255,0.45)"
@@ -337,14 +352,14 @@ export function JourneyBefore({ progress }: Props) {
         {/* CIRCLE 2                                               */}
         {/* ════════════════════════════════════════════════════════ */}
         <circle
-          cx={CX2} cy={CY} r={R}
+          cx={CX2} cy={CY2} r={R}
           fill="none" stroke="url(#jb-grad)"
           strokeWidth={2} strokeLinecap="round"
           strokeDasharray={CIRC}
           strokeDashoffset={CIRC * (1 - sweep2)}
           opacity={sweep2 * g2op}
           filter="url(#jb-glow-sm)"
-          style={{ transformOrigin: `${CX2}px ${CY}px`, transform: "rotate(-90deg)" }}
+          style={{ transformOrigin: `${CX2}px ${CY2}px`, transform: "rotate(-90deg)" }}
         />
         {/* C2 dots (no labels) */}
         {cp2.map((pos, i) => {
@@ -367,7 +382,7 @@ export function JourneyBefore({ progress }: Props) {
           );
         })}
         <text
-          x={CX2} y={CY - R - 14}
+          x={CX2} y={CY2 - R - 14}
           textAnchor="middle" fontSize={10}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={700} fill="#D551C9"
@@ -375,29 +390,20 @@ export function JourneyBefore({ progress }: Props) {
         >
           Cycle 2
         </text>
-        <text
-          x={CX2} y={CY + R + 22}
-          textAnchor="middle" fontSize={9}
-          fontFamily="'Montserrat', system-ui, sans-serif"
-          fontWeight={600} fill="rgba(240,236,255,0.5)"
-          opacity={sweep2 * g2op}
-        >
-          12 wks
-        </text>
-
         {/* ════════════════════════════════════════════════════════ */}
-        {/* ARROW 2 → C3                                           */}
+        {/* ARROW 2 → C3  (step-up path)                          */}
         {/* ════════════════════════════════════════════════════════ */}
-        <line
-          x1={ARR[1].x1} y1={ARR[1].y} x2={ARR[1].x2} y2={ARR[1].y}
+        <path
+          d={stepPath(ARR[1].x1, ARR[1].y1, ARR[1].x2, ARR[1].y2)}
+          fill="none"
           stroke="rgba(209,193,255,0.5)" strokeWidth={1.5}
           markerEnd="url(#arrowhead)"
           opacity={arr2T}
-          strokeDasharray="3 4"
         />
         <text
-          x={(ARR[1].x1 + ARR[1].x2) / 2} y={ARR[1].y - 9}
-          textAnchor="middle" fontSize={8}
+          x={(ARR[1].x1 + ARR[1].x2) / 2 + 10}
+          y={(ARR[1].y1 + ARR[1].y2) / 2}
+          textAnchor="start" fontSize={8}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={600} letterSpacing="0.08em"
           fill="rgba(209,193,255,0.45)"
@@ -411,14 +417,14 @@ export function JourneyBefore({ progress }: Props) {
         {/* CIRCLE 3                                               */}
         {/* ════════════════════════════════════════════════════════ */}
         <circle
-          cx={CX3} cy={CY} r={R}
+          cx={CX3} cy={CY3} r={R}
           fill="none" stroke="url(#jb-grad)"
           strokeWidth={2} strokeLinecap="round"
           strokeDasharray={CIRC}
           strokeDashoffset={CIRC * (1 - sweep3)}
           opacity={sweep3 * g3op}
           filter="url(#jb-glow-sm)"
-          style={{ transformOrigin: `${CX3}px ${CY}px`, transform: "rotate(-90deg)" }}
+          style={{ transformOrigin: `${CX3}px ${CY3}px`, transform: "rotate(-90deg)" }}
         />
         {/* C3 dots */}
         {cp3.map((pos, i) => {
@@ -441,7 +447,7 @@ export function JourneyBefore({ progress }: Props) {
           );
         })}
         <text
-          x={CX3} y={CY - R - 14}
+          x={CX3} y={CY3 - R - 14}
           textAnchor="middle" fontSize={10}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={700} fill="#9B6DFF"
@@ -449,29 +455,20 @@ export function JourneyBefore({ progress }: Props) {
         >
           Cycle 3
         </text>
-        <text
-          x={CX3} y={CY + R + 22}
-          textAnchor="middle" fontSize={9}
-          fontFamily="'Montserrat', system-ui, sans-serif"
-          fontWeight={600} fill="rgba(240,236,255,0.5)"
-          opacity={sweep3 * g3op}
-        >
-          12 wks
-        </text>
-
         {/* ════════════════════════════════════════════════════════ */}
-        {/* ARROW 3 → C4                                           */}
+        {/* ARROW 3 → C4  (step-up path)                          */}
         {/* ════════════════════════════════════════════════════════ */}
-        <line
-          x1={ARR[2].x1} y1={ARR[2].y} x2={ARR[2].x2} y2={ARR[2].y}
+        <path
+          d={stepPath(ARR[2].x1, ARR[2].y1, ARR[2].x2, ARR[2].y2)}
+          fill="none"
           stroke="rgba(209,193,255,0.5)" strokeWidth={1.5}
           markerEnd="url(#arrowhead)"
           opacity={arr3T}
-          strokeDasharray="3 4"
         />
         <text
-          x={(ARR[2].x1 + ARR[2].x2) / 2} y={ARR[2].y - 9}
-          textAnchor="middle" fontSize={8}
+          x={(ARR[2].x1 + ARR[2].x2) / 2 + 10}
+          y={(ARR[2].y1 + ARR[2].y2) / 2}
+          textAnchor="start" fontSize={8}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={600} letterSpacing="0.08em"
           fill="rgba(209,193,255,0.45)"
@@ -485,14 +482,14 @@ export function JourneyBefore({ progress }: Props) {
         {/* CIRCLE 4 — the final ring, brighter, becomes flywheel  */}
         {/* ════════════════════════════════════════════════════════ */}
         <circle
-          cx={CX4} cy={CY} r={R}
+          cx={CX4} cy={CY4} r={R}
           fill="none" stroke="url(#jb-grad4)"
           strokeWidth={2.5} strokeLinecap="round"
           strokeDasharray={CIRC}
           strokeDashoffset={CIRC * (1 - sweep4)}
           opacity={sweep4}
           filter="url(#jb-glow)"
-          style={{ transformOrigin: `${CX4}px ${CY}px`, transform: "rotate(-90deg)" }}
+          style={{ transformOrigin: `${CX4}px ${CY4}px`, transform: "rotate(-90deg)" }}
         />
         {/* C4 dots */}
         {cp4.map((pos, i) => {
@@ -515,22 +512,13 @@ export function JourneyBefore({ progress }: Props) {
           );
         })}
         <text
-          x={CX4} y={CY - R - 14}
+          x={CX4} y={CY4 - R - 14}
           textAnchor="middle" fontSize={10}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={700} fill="#9B6DFF"
           opacity={sweep4}
         >
           Cycle 4
-        </text>
-        <text
-          x={CX4} y={CY + R + 22}
-          textAnchor="middle" fontSize={9}
-          fontFamily="'Montserrat', system-ui, sans-serif"
-          fontWeight={600} fill="rgba(240,236,255,0.5)"
-          opacity={sweep4}
-        >
-          12 wks
         </text>
 
         {/* ── Phase 5: "with every iteration" annotation ── */}
