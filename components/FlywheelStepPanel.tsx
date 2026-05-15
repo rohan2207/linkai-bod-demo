@@ -14,25 +14,15 @@ const BUILD_FRAMES: FlywheelFrame[] = [
   {
     component: <BuildFrame1 />,
     headline: "More releases. Smaller changes.",
-    caption: "As shipping frequency went up, average diff size came down. The scissors crossed in late 2025.",
-  },
-  {
-    component: <BuildFrame2 />,
-    headline: "The verdict: DORA Elite.",
-    caption: "4.3 days mean lead time. 121 production deploys. Top tier by any measure.",
+    caption: "As shipping frequency 10× — average diff size came down. The scissors crossed in late 2025.",
   },
 ];
 
 const VALIDATE_FRAMES: FlywheelFrame[] = [
   {
     component: <ValidateFrame1 />,
-    headline: "The scale of the shift.",
-    caption: "Nov 2025 vs May 2026 - every number changed by an order of magnitude.",
-  },
-  {
-    component: <ValidateFrame2 />,
-    headline: "+690% in six months.",
-    caption: "30 test files to 237. Quality scaled with the team, not against it.",
+    headline: "+690% test growth. Same team.",
+    caption: "Nov 2025 vs May 2026 — every quality metric changed by an order of magnitude.",
   },
 ];
 
