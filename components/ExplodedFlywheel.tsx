@@ -21,12 +21,12 @@ export function ExplodedFlywheel({ progress, activeIndex }: ExplodedFlywheelProp
   useLayoutEffect(() => {
     const cards = cardRefs.current.filter(Boolean);
     const wrap = wheelWrapRef.current;
-    const tl = createTimeline({ defaults: { ease: "out(4)" } });
+    const tl = createTimeline({ defaults: { ease: "cubicBezier(0.16,1,0.3,1)" } });
     if (wrap) {
-      tl.add(wrap, { opacity: [0, 1], scale: [0.88, 1], y: [26, 0], duration: 680 });
+      tl.add(wrap, { opacity: [0, 1], scale: [0.92, 1], y: [12, 0], duration: 500 });
     }
     if (cards.length) {
-      tl.add(cards, { opacity: [0, 1], y: [24, 0], duration: 520, delay: stagger(45) }, 70);
+      tl.add(cards, { opacity: [0, 1], y: [8, 0], duration: 300, delay: stagger(60) }, 70);
     }
     readyRef.current = true;
     return () => {
@@ -78,11 +78,11 @@ export function ExplodedFlywheel({ progress, activeIndex }: ExplodedFlywheelProp
                 boxShadow: active ? `0 0 36px ${step.color}44, 0 20px 60px rgba(0,0,0,0.5)` : undefined,
               }}
             >
-              <span className="text-[0.55rem] uppercase tracking-[0.2em] text-[rgba(209,193,255,0.45)]">
+              <span className="font-sans text-[0.6rem] font-extrabold uppercase tracking-[0.15em] text-[#FF8300]">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p className="mt-2 font-serif text-xl font-light text-white">{step.label}</p>
-              <p className="mt-1 text-[0.65rem] font-light text-[rgba(209,193,255,0.48)]">AI-augmented</p>
+              <p className="mt-2 font-sans text-[1.1rem] font-bold text-white">{step.label}</p>
+              <p className="badge-shimmer mt-2 inline-block rounded-full px-2.5 py-0.5 font-body text-[0.6rem] font-bold uppercase tracking-[0.1em] text-[#FF8300]">AI-augmented</p>
             </div>
           );
         })}

@@ -25,7 +25,7 @@ export type FlywheelHumanAi = {
 };
 
 export type FlywheelFrame = {
-  /** Path under /public — used when showing a screenshot. Mutually exclusive with component. */
+  /** Path under /public - used when showing a screenshot. Mutually exclusive with component. */
   src?: string;
   /** React content rendered inside the frame chrome. Takes priority over src. */
   component?: React.ReactNode;
@@ -67,10 +67,10 @@ export type FlywheelStep = {
   scrollWeight?: number;
 };
 
-/** Scroll journey — line → wheel bridge copy (editable) */
+/** Scroll journey - line → wheel bridge copy (editable) */
 export const JOURNEY_MORPH_CUE = "The line bends into a loop.";
 export const JOURNEY_AFTER_LINE =
-  "Small iterations. Tight feedback. The same six motions — now continuous — so ideas ship as production, not as a quarterly bet.";
+  "Small iterations. Tight feedback. The same six motions - now continuous - so ideas ship as production, not as a quarterly bet.";
 /** Shown once the flywheel stage is primary (post–“Before”) */
 export const JOURNEY_AFTER_EYEBROW = "After";
 export const JOURNEY_ADOPTION_LINE =
@@ -91,7 +91,7 @@ export const HERO_COPY = {
   headlineEmphasis: "Age of AI.",
   headlineSuffix: "Everything is faster now.",
   body:
-    "The pace of advancement is no longer linear. Mortgage is a high-scrutiny industry with enormous opportunity — and the right tools let the same team move faster, do more, and compress the vendor footprint that has historically slowed us down.",
+    "The pace of advancement is no longer linear. Mortgage is a high-scrutiny industry with enormous opportunity - and the right tools let the same team move faster, do more, and compress the vendor footprint that has historically slowed us down.",
 } as const;
 
 export const STORY_PIVOT_COPY = {
@@ -109,9 +109,9 @@ export const OPPORTUNITY_COPY = {
   eyebrow: "The Opportunity",
   titleLead: "Technology now advances at the speed of intelligence.",
   pillars: [
-    "AI compresses the distance between idea and execution. The same team now produces meaningfully more — without adding headcount or budget.",
+    "AI compresses the distance between idea and execution. The same team now produces meaningfully more - without adding headcount or budget.",
     "Mortgage is ripe for disruption. Complex workflows, high scrutiny, and a fragmented vendor landscape create enormous opportunity for teams who can move faster and consolidate smarter.",
-    "LinkAI and AI together are helping us compress that vendor footprint — replacing legacy desktop tools with a scalable, modern platform built for how our people actually work.",
+    "LinkAI and AI together are helping us compress that vendor footprint - replacing legacy desktop tools with a scalable, modern platform built for how our people actually work.",
   ],
 } as const;
 
@@ -125,11 +125,12 @@ export const STORY_SCENE_VH = {
   hero: 140,
   textTransition: 100,
   flywheel: 420,
+  heroStat: 80,
   proof: 140,
   outro: 100,
 } as const;
 
-export const STORY_SCENE_ORDER = ["hero", "textTransition", "flywheel", "proof", "outro"] as const;
+export const STORY_SCENE_ORDER = ["hero", "textTransition", "flywheel", "heroStat", "proof", "outro"] as const;
 export type StorySceneId = (typeof STORY_SCENE_ORDER)[number];
 
 export const FLYWHEEL_STEPS: FlywheelStep[] = [
@@ -140,7 +141,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     eyebrow: "01 · Discover",
     title: "For the first time,\nwe can see how people\nactually use the product.",
     lead:
-      "Moving from Encompass to a web-based platform unlocked something we never had before: user analytics. Pendo now shows us exactly where employees spend time, what they skip, what's working, and what's ready to be retired. Claude connects to all our data sources through MCP — surfacing patterns across usage, support trends, and business data to drive smarter product decisions.",
+      "Moving from Encompass to a web-based platform unlocked something we never had before: user analytics. Pendo now shows us exactly where employees spend time, what they skip, what's working, and what's ready to be retired. Claude connects to all our data sources through MCP - surfacing patterns across usage, support trends, and business data to drive smarter product decisions.",
     tagline: "We finally see how the product is used.",
     bullets: [
       "Pendo: real-time employee behavior",
@@ -151,9 +152,9 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     personaRole: "Person in the loop",
     personaName: "Product Manager",
     personaLine:
-      "Uses Pendo for ground truth on behavior, then Claude + MCP to connect usage with support and business signals — so prioritization is evidence-led, not opinion-led.",
+      "Uses Pendo for ground truth on behavior, then Claude + MCP to connect usage with support and business signals - so prioritization is evidence-led, not opinion-led.",
     metrics: [
-      { value: "Real-time", label: "Usage visibility — impossible in Encompass", tone: "purple" },
+      { value: "Real-time", label: "Usage visibility - impossible in Encompass", tone: "purple" },
       { value: "Minutes", label: "Insight to decision", tone: "amber" },
     ],
     tools: ["Pendo", "Claude + MCP", "Databricks"],
@@ -166,7 +167,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
       {
         src: "/assets/discover-pendo-full.png",
         headline: "Pendo: 1,588 session replays",
-        caption: "We can see every path, every hesitation, every drop-off — in real time.",
+        caption: "We can see every path, every hesitation, every drop-off - in real time.",
         timestamp: "00:07 – 00:18",
       },
       {
@@ -178,7 +179,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
       {
         src: "/assets/discover-claude-mcp.png",
         headline: "Claude + MCP connects the dots",
-        caption: "Usage, support tickets, and business data — analysed together in seconds.",
+        caption: "Usage, support tickets, and business data - analysed together in seconds.",
         timestamp: "00:26 – 00:34",
       },
       {
@@ -194,10 +195,10 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     label: "Design",
     color: "#D551C9",
     eyebrow: "02 · Design",
-    title: "From intent\nto interface — faster.",
+    title: "From intent\nto interface - faster.",
     lead:
-      "The design process is fundamentally cleaner. Ideas start as rough concepts in Claude, which lets the business iterate quickly without waiting on formal designs. Those concepts move into high-fidelity screens in Figma Make, and the handoff to the engineering team is simpler — because AI can read and build from the design directly. Storybook integration is in progress, which will close the loop further.",
-    tagline: "Intent to interface — without the deck.",
+      "The design process is fundamentally cleaner. Ideas start as rough concepts in Claude, which lets the business iterate quickly without waiting on formal designs. Those concepts move into high-fidelity screens in Figma Make, and the handoff to the engineering team is simpler - because AI can read and build from the design directly. Storybook integration is in progress, which will close the loop further.",
+    tagline: "Intent to interface - without the deck.",
     bullets: [
       "Claude: rapid concept exploration",
       "Figma Make: lo-fi → hi-fi in hours",
@@ -207,7 +208,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     personaRole: "Person in the loop",
     personaName: "Product Designer",
     personaLine:
-      "Pairs with Claude for fast exploration, then ships intent through Figma Make — so engineering receives something closer to buildable truth, not a deck of metaphors.",
+      "Pairs with Claude for fast exploration, then ships intent through Figma Make - so engineering receives something closer to buildable truth, not a deck of metaphors.",
     metrics: [
       { value: "Lo-fi → Hi-fi", label: "Faster iteration cycles", tone: "pink" },
       { value: "Cleaner", label: "Engineering handoff", tone: "purple" },
@@ -222,7 +223,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
       {
         src: "/assets/design-prompt.png",
         headline: "A prompt, not a brief.",
-        caption: "\"Create a modern loan officer dashboard from this exact LinkAI app.\" That's the entire design spec — sent to Figma Make.",
+        caption: "\"Create a modern loan officer dashboard from this exact LinkAI app.\" That's the entire design spec - sent to Figma Make.",
         timestamp: "00:00 – 00:12",
       },
       {
@@ -234,7 +235,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
       {
         src: "/assets/design-result.png",
         headline: "Hi-fi in the same session.",
-        caption: "Dashboard, pipeline cards, application progress, next best actions — generated and styled, ready for engineering handoff.",
+        caption: "Dashboard, pipeline cards, application progress, next best actions - generated and styled, ready for engineering handoff.",
         timestamp: "00:22 – 00:34",
       },
     ],
@@ -246,7 +247,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     eyebrow: "03 · Build",
     title: "Engineers building\nat a fundamentally\ndifferent pace.",
     lead:
-      "AI writes the repetitive parts of the code, understands the existing codebase, and helps engineers focus on what actually requires human judgment. The result: more features, more reliably, in less time. Changes are smaller and more frequent — which means less risk with every release.",
+      "AI writes the repetitive parts of the code, understands the existing codebase, and helps engineers focus on what actually requires human judgment. The result: more features, more reliably, in less time. Changes are smaller and more frequent - which means less risk with every release.",
     tagline: "Engineers ship judgment, not boilerplate.",
     bullets: [
       "10× more releases vs early 2023",
@@ -257,10 +258,10 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     personaRole: "Person in the loop",
     personaName: "Software Engineer",
     personaLine:
-      "Uses Cursor and Claude Code as a force multiplier — boilerplate and navigation yield to judgment calls, reviews, and architecture. Velocity rises without lowering the bar on ownership.",
+      "Uses Cursor and Claude Code as a force multiplier - boilerplate and navigation yield to judgment calls, reviews, and architecture. Velocity rises without lowering the bar on ownership.",
     metrics: [
       { value: "10×", label: "More releases vs. early 2023", tone: "purple" },
-      { value: "Smaller", label: "Each change — lower risk", tone: "amber" },
+      { value: "Smaller", label: "Each change - lower risk", tone: "amber" },
       { value: "More", label: "Value per engineer", tone: "pink" },
     ],
     tools: ["Cursor", "Claude Code"],
@@ -278,7 +279,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     eyebrow: "04 · Validate",
     title: "Quality keeping pace\nwith velocity.",
     lead:
-      "Historically, moving faster meant taking on more risk. AI changes that equation. As the team ships more, automated testing grows in lockstep — so every release is more verified than the last. Six months ago we had minimal automated test coverage. Today it's grown nearly 8×.",
+      "Historically, moving faster meant taking on more risk. AI changes that equation. As the team ships more, automated testing grows in lockstep - so every release is more verified than the last. Six months ago we had minimal automated test coverage. Today it's grown nearly 8×.",
     tagline: "Validation grows with shipping speed.",
     bullets: [
       "8× more automated checks in 6 months",
@@ -289,7 +290,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     personaRole: "Person in the loop",
     personaName: "QA Engineer",
     personaLine:
-      "Directs coverage where risk is highest; AI accelerates authoring and maintenance of tests so validation scales with shipping frequency — not after it.",
+      "Directs coverage where risk is highest; AI accelerates authoring and maintenance of tests so validation scales with shipping frequency - not after it.",
     metrics: [
       { value: "8×", label: "More automated validation in 6 months", tone: "green" },
       { value: "2,600+", label: "Automated checks on every release", tone: "amber" },
@@ -310,8 +311,8 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     eyebrow: "05 · Deliver",
     title: "New capabilities\nreaching employees\nin days, not quarters.",
     lead:
-      "The time between a decision and a working feature in employees' hands has dropped from months to days. In the past 13 months the team has released to production over 120 times. What once took a full release cycle now ships in a fraction of the time — and the pace is accelerating.",
-    tagline: "Decision to delivered — in days.",
+      "The time between a decision and a working feature in employees' hands has dropped from months to days. In the past 13 months the team has released to production over 120 times. What once took a full release cycle now ships in a fraction of the time - and the pace is accelerating.",
+    tagline: "Decision to delivered - in days.",
     bullets: [
       "121 production releases in 13 months",
       "↓ 95% release cycle vs 2 years ago",
@@ -321,7 +322,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     personaRole: "Person in the loop",
     personaName: "SRE / Release",
     personaLine:
-      "Owns safe continuous delivery — smaller batches, observable pipelines, fast rollback. AI doesn't replace ops judgment; it removes toil so judgment shows up earlier.",
+      "Owns safe continuous delivery - smaller batches, observable pipelines, fast rollback. AI doesn't replace ops judgment; it removes toil so judgment shows up earlier.",
     metrics: [
       { value: "121", label: "Production releases in 13 months", tone: "purple" },
       { value: "Days", label: "Avg time from decision to delivered", tone: "amber" },
@@ -345,7 +346,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     eyebrow: "06 · Document & Accelerate",
     title: "Better docs make\nthe AI smarter.",
     lead:
-      "Claude and MCP continuously improve documentation as we build. That documentation feeds back into AI — enabling story creation, technical scoping, test generation, RCA and more. More context means AI can do more, making every next cycle faster.",
+      "Claude and MCP continuously improve documentation as we build. That documentation feeds back into AI - enabling story creation, technical scoping, test generation, RCA and more. More context means AI can do more, making every next cycle faster.",
     tagline: "Better docs make the AI smarter.",
     bullets: [
       "MCP grounds every AI surface",
@@ -356,7 +357,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     personaRole: "Person in the loop",
     personaName: "Tech Lead + PM",
     personaLine:
-      "Curates the knowledge layer the org runs on — ADRs, runbooks, and product context — so every AI surface (MCP, code agents, analysis) starts from a grounded source of truth.",
+      "Curates the knowledge layer the org runs on - ADRs, runbooks, and product context - so every AI surface (MCP, code agents, analysis) starts from a grounded source of truth.",
     metrics: [
       { value: "∞", label: "Compounding loop", tone: "purple" },
       { value: "More", label: "AI capability per cycle", tone: "amber" },
@@ -415,21 +416,21 @@ export const CHART_DEPLOY = {
   leadDays: [17, 12, 10, 10, 8, 8, 7, 6, 6, 12, 2, 2, 1, 1],
 };
 
-/** Validate — grouped bar: test counts by category, Nov 2025 vs May 2026 */
+/** Validate - grouped bar: test counts by category, Nov 2025 vs May 2026 */
 export const CHART_TESTS_BY_CATEGORY = {
   labels: ["Unit", "Acceptance", "Integration", "E2E", "Other"],
   nov2025: [21, 0, 3, 2, 7],
   may2026: [128, 43, 6, 2, 57],
 };
 
-/** Validate — donut: test type breakdown (May 2026) */
+/** Validate - donut: test type breakdown (May 2026) */
 export const CHART_TESTS_DONUT = {
   labels: ["Unit", "Acceptance", "Integration", "Other", "E2E"],
   values: [54, 18, 3, 24, 1],
   colors: ["#9B6DFF", "#F7B334", "#4ADE80", "rgba(209,193,255,0.45)", "#D551C9"],
 };
 
-/** Validate — horizontal bar: test cases + assertions Nov vs May */
+/** Validate - horizontal bar: test cases + assertions Nov vs May */
 export const CHART_TESTS_HORIZONTAL = {
   labels: ["Test cases", "Assertions"],
   nov2025: [71, 145],
@@ -438,7 +439,7 @@ export const CHART_TESTS_HORIZONTAL = {
 };
 
 /**
- * Build — DORA lead-time stacked bar.
+ * Build - DORA lead-time stacked bar.
  * Bands: Elite (<1d) | High (1d-1w) | Medium (1w-1mo) | Low (>1mo)
  * Labels: Jun 2025 → May 2026 (12 months)
  */
@@ -456,7 +457,7 @@ export const CHART_BUILD_DORA = {
 };
 
 /**
- * Build — scatter: PRs/week vs avg lines changed.
+ * Build - scatter: PRs/week vs avg lines changed.
  * historical = 2022-2025 (purple) | recent = 2026 (orange)
  */
 export const CHART_BUILD_SCATTER = {
@@ -486,8 +487,8 @@ export const CHART_BUILD_SCATTER = {
 export const OLD_WAY_STAGES = [
   { label: "Ideation", time: "1–2 wks", title: "Ideation", text: "Spreadsheets of ideas. Weeks of meetings. The right ones often surfaced late, after sunk cost was already real." },
   { label: "Requirements", time: "2 wks", title: "Requirements", text: "PMs ran user research by hand. Patterns took weeks to surface. Specs were stale before they were complete." },
-  { label: "Design", time: "2–3 wks", title: "Design", text: "Two or three iterations per feature. Mockups and decks. Engineering received intent — not working components." },
+  { label: "Design", time: "2–3 wks", title: "Design", text: "Two or three iterations per feature. Mockups and decks. Engineering received intent - not working components." },
   { label: "Build", time: "3–4 wks", title: "Build", text: "Engineers wrote boilerplate. Legacy comprehension took weeks. Every specialist became a bottleneck." },
-  { label: "Test", time: "1–2 wks", title: "Test", text: "QA caught bugs days after merge. Each fix waited for the next release window. Quality vs. speed — a constant trade." },
+  { label: "Test", time: "1–2 wks", title: "Test", text: "QA caught bugs days after merge. Each fix waited for the next release window. Quality vs. speed - a constant trade." },
   { label: "Launch", time: "bi-weekly", title: "Launch", text: "Bi-weekly release trains. Code finished today reached users in two weeks. By then, the team had already moved on." },
 ];

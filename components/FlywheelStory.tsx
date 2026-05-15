@@ -82,13 +82,12 @@ export function FlywheelStory({ progress }: FlywheelStoryProps) {
     if (!panel) return;
     const layers = Array.from(panel.querySelectorAll("[data-step-layer]"));
     if (!layers.length) return;
-    const tl = createTimeline();
+    const tl = createTimeline({ defaults: { ease: "cubicBezier(0.16,1,0.3,1)" } });
     tl.add(layers, {
       opacity: [0, 1],
-      y: [16, 0],
-      duration: 420,
-      delay: stagger(55),
-      ease: "out(3)",
+      y: [8, 0],
+      duration: 300,
+      delay: stagger(80),
     });
     return () => {
       tl.revert();
@@ -132,9 +131,9 @@ export function FlywheelStory({ progress }: FlywheelStoryProps) {
               className="mx-auto max-w-[820px] flex-shrink-0 text-center transition-opacity duration-300"
               style={{ opacity: afterHeaderOpacity }}
             >
-              <p className="text-[0.62rem] font-medium uppercase tracking-[0.3em] text-[#D551C9]">{JOURNEY_AFTER_EYEBROW}</p>
-              <p className="mt-3 font-serif text-[clamp(1.15rem,2.2vw,1.6rem)] font-light leading-snug text-[#D1C1FF]">{JOURNEY_AFTER_LINE}</p>
-              <p className="mx-auto mt-4 max-w-[620px] text-sm font-light text-[rgba(209,193,255,0.62)]">{JOURNEY_ADOPTION_LINE}</p>
+              <p className="font-sans text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-[#D551C9]">{JOURNEY_AFTER_EYEBROW}</p>
+              <p className="mt-3 font-sans text-[clamp(1.35rem,2.5vw,2rem)] font-bold leading-snug text-[#D1C1FF]">{JOURNEY_AFTER_LINE}</p>
+              <p className="mx-auto mt-4 max-w-[620px] font-body text-[1rem] font-normal text-[rgba(209,193,255,0.62)]">{JOURNEY_ADOPTION_LINE}</p>
             </div>
           ) : null}
 

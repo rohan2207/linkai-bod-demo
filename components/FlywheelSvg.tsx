@@ -7,6 +7,7 @@ import {
   useId,
   useMemo,
   useRef,
+  useEffect,
   type MutableRefObject,
 } from "react";
 import { createTimeline } from "animejs";
@@ -16,10 +17,12 @@ import { FW_CX, FW_CY, FW_RO, FW_RI, fwPolar, fwSegMidpoints } from "@/lib/flywh
 type Props = {
   activeIndex: number;
   className?: string;
+  /** When true, run an idle sequential highlight loop instead of responding to activeIndex. */
+  loopMode?: boolean;
 };
 
 export const FlywheelSvg = forwardRef<SVGSVGElement, Props>(function FlywheelSvg(
-  { activeIndex, className },
+  { activeIndex, className, loopMode = false },
   ref,
 ) {
   const uid = useId().replace(/:/g, "");
@@ -95,7 +98,47 @@ export const FlywheelSvg = forwardRef<SVGSVGElement, Props>(function FlywheelSvg
     return () => {
       tl.revert();
     };
-  }, [activeIndex, segments.length]);
+  }, [activeIndex, segments.length, loopMode]);
+
+  // Sequential highlight loop for idle/after-flywheel state
+  useEffect(() => {
+    if (!loopMode) return;
+
+    let loopIdx = 0;
+    let rafId: ReturnType<typeof setTimeout>;
+
+    function highlightNext() {
+      const n = segments.length;
+      for (let i = 0; i < n; i++) {
+        const shell = shellRefs.current[i];
+        const inner = innerRefs.current[i];
+        if (!shell || !inner) continue;
+        const active = i === loopIdx;
+        const tl = createTimeline({ defaults: { ease: "cubicBezier(0.16,1,0.3,1)" } });
+        tl.add(shell, { scale: active ? 1.05 : 1.0, duration: 300 }, 0);
+        tl.add(
+          inner,
+          {
+            filter: active
+              ? "brightness(1.3) saturate(1.4) drop-shadow(0 0 8px #FF8300)"
+              : "brightness(1) saturate(1)",
+            opacity: active ? 1 : 0.55,
+            duration: 300,
+          },
+          0,
+        );
+      }
+      loopIdx = (loopIdx + 1) % n;
+      rafId = setTimeout(highlightNext, 500);
+    }
+
+    // Start loop after a short initial delay
+    const startId = setTimeout(highlightNext, 600);
+    return () => {
+      clearTimeout(startId);
+      clearTimeout(rafId);
+    };
+  }, [loopMode, segments.length]);
 
   return (
     <svg
@@ -172,11 +215,11 @@ export const FlywheelSvg = forwardRef<SVGSVGElement, Props>(function FlywheelSvg
                 y={s.ly}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontFamily="var(--font-space), system-ui, sans-serif"
-                fontSize={6}
-                fontWeight={500}
-                fill="rgba(240,236,255,.9)"
-                style={{ opacity: active ? 1 : 0.55 }}
+                fontFamily="'Montserrat', var(--font-montserrat), system-ui, sans-serif"
+                fontSize={7}
+                fontWeight={700}
+                fill="rgba(240,236,255,.95)"
+                style={{ opacity: active ? 1 : 0.6 }}
                 transform={`rotate(${s.md - 90}, ${s.lx}, ${s.ly})`}
               >
                 {s.label}

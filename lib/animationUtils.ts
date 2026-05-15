@@ -1,3 +1,12 @@
+/** Entrance easing: decelerates naturally, like a car pulling into a parking spot. */
+export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
+
+/** Spring easing: organic overshoot and settle. */
+export const EASE_SPRING = [0.34, 1.56, 0.64, 1] as const;
+
+/** Standard Anime.js ease string for entrances. */
+export const ANIME_EASE_OUT = "cubicBezier(0.16, 1, 0.3, 1)";
+
 export function clamp01(value: number) {
   return Math.max(0, Math.min(1, value));
 }

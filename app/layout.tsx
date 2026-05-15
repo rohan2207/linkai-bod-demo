@@ -1,23 +1,25 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Space_Grotesk } from "next/font/google";
+import { Montserrat, Nunito } from "next/font/google";
 import "./globals.css";
 
-const space = Space_Grotesk({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-space",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
+  weight: ["500", "600", "700", "800"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
+const nunito = Nunito({
   subsets: ["latin"],
-  variable: "--font-cormorant",
-  weight: ["300", "400"],
-  style: ["normal", "italic"],
+  variable: "--font-nunito",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "LinkAI — Mortgage Technology Q1 2026",
-  description: "Board of Directors update — LinkAI platform and AI-augmented delivery.",
+  title: "LinkAI - Mortgage Technology Q1 2026",
+  description: "Board of Directors update - LinkAI platform and AI-augmented delivery.",
 };
 
 export default function RootLayout({
@@ -27,7 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${space.variable} ${cormorant.variable} bg-[#0c0916] font-[family-name:var(--font-space)] text-[#f0ecff] antialiased`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className={`${montserrat.variable} ${nunito.variable} bg-[#0A0620] font-[family-name:var(--font-nunito)] text-[#f0ecff] antialiased`}>
         {children}
       </body>
     </html>

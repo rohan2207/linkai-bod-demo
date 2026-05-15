@@ -17,7 +17,7 @@ export function OutroScene({ progress }: OutroSceneProps) {
     const lines = lineRefs.current.filter(Boolean);
     if (!lines.length) return;
     const tl = createTimeline({ defaults: { ease: "out(4)" } });
-    tl.add(lines, { opacity: [0, 1], y: [24, 0], duration: 640, delay: stagger(130) });
+    tl.add(lines, { opacity: [0, 1], y: [8, 0], duration: 500, delay: stagger(130) });
     return () => {
       tl.revert();
     };
@@ -45,13 +45,13 @@ export function OutroScene({ progress }: OutroSceneProps) {
             ref={(node) => {
               lineRefs.current[0] = node;
             }}
-            className="mb-10 text-[0.68rem] uppercase tracking-[0.3em] text-[var(--mu)]"
+            className="mb-10 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[var(--mu)]"
             style={{ opacity: 0 }}
           >
             {OUTRO_COPY.eyebrow}
           </p>
 
-          <blockquote className="font-serif text-[clamp(2rem,4vw,4rem)] font-light italic leading-tight text-[#D1C1FF]">
+          <blockquote className="font-sans text-[clamp(2rem,4vw,2.8rem)] font-bold leading-tight text-[#D1C1FF]">
             {OUTRO_COPY.statement.map((line, i) => (
               <p
                 key={line}
@@ -67,9 +67,19 @@ export function OutroScene({ progress }: OutroSceneProps) {
 
           <p
             ref={(node) => {
+              lineRefs.current[3] = node;
+            }}
+            className="mt-8 font-body text-[1.25rem] font-semibold text-[#D1C1FF]"
+            style={{ opacity: 0 }}
+          >
+            121 releases. One team.
+          </p>
+
+          <p
+            ref={(node) => {
               lineRefs.current[4] = node;
             }}
-            className="mt-16 text-[0.62rem] uppercase tracking-[0.25em] text-[rgba(209,193,255,0.25)]"
+            className="mt-12 font-body text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-[rgba(209,193,255,0.25)]"
             style={{ opacity: 0 }}
           >
             {OUTRO_COPY.footer}

@@ -13,15 +13,21 @@ export default {
           "0%": { transform: "translate(0,0) scale(1)" },
           "100%": { transform: "translate(30px,40px) scale(1.08)" },
         },
+        "count-up": {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         drift: "drift 18s ease-in-out infinite alternate",
         "drift-slow": "drift 24s ease-in-out infinite alternate",
         "drift-mid": "drift 22s ease-in-out infinite alternate",
+        "count-up": "count-up 0.3s cubic-bezier(0.16,1,0.3,1) both",
       },
       fontFamily: {
-        sans: ["var(--font-space)", "system-ui", "sans-serif"],
-        serif: ["var(--font-cormorant)", "Georgia", "serif"],
+        sans: ["var(--font-montserrat)", "system-ui", "sans-serif"],
+        body: ["var(--font-nunito)", "system-ui", "sans-serif"],
+        serif: ["var(--font-montserrat)", "system-ui", "sans-serif"],
       },
       colors: {
         ink: "#0c0916",

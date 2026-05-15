@@ -62,7 +62,7 @@ function SideCard({
         <p className="truncate text-[0.78rem] font-medium text-white">{side.label}</p>
       </div>
 
-      <p className="font-serif text-[0.98rem] font-light italic leading-snug text-[rgba(240,236,255,0.92)]">
+      <p className="font-body text-[0.98rem] font-normal italic leading-snug text-[rgba(240,236,255,0.92)]">
         {side.tagline}
       </p>
 

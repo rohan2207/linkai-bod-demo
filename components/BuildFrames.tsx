@@ -187,7 +187,7 @@ export function BuildFrame2() {
           }}
         >
           <p
-            className="font-serif text-[clamp(2.2rem,5vw,3.8rem)] font-bold leading-none tracking-widest"
+            className="font-sans text-[clamp(2.2rem,5vw,3.8rem)] font-bold leading-none tracking-widest"
             style={{ color: GREEN, textShadow: `0 0 32px ${GREEN}88` }}
           >
             ELITE
@@ -202,7 +202,7 @@ export function BuildFrame2() {
       <div className="flex gap-6">
         <div className="flex flex-col items-center gap-1 text-center">
           <p
-            className="font-serif text-[clamp(1.8rem,3.5vw,2.6rem)] font-bold leading-none"
+            className="font-sans text-[clamp(1.8rem,3.5vw,2.6rem)] font-bold leading-none"
             style={{ color: "#60A5FA" }}
           >
             4.3 days
@@ -217,7 +217,7 @@ export function BuildFrame2() {
         />
         <div className="flex flex-col items-center gap-1 text-center">
           <p
-            className="font-serif text-[clamp(1.8rem,3.5vw,2.6rem)] font-bold leading-none"
+            className="font-sans text-[clamp(1.8rem,3.5vw,2.6rem)] font-bold leading-none"
             style={{ color: PURPLE }}
           >
             121

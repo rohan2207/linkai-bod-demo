@@ -18,13 +18,13 @@ export function MetricCard({ value, label, tone }: Props) {
     <div>
       <p
         className={cn(
-          "font-serif text-2xl font-light sm:text-3xl",
+          "font-sans text-[clamp(2.5rem,5vw,4rem)] font-extrabold leading-none",
           toneClass[tone],
         )}
       >
         {value}
       </p>
-      <p className="mt-1 max-w-[14rem] text-[0.58rem] font-medium uppercase tracking-[0.14em] text-[rgba(209,193,255,0.35)]">
+      <p className="mt-2 max-w-[14rem] font-body text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-[rgba(209,193,255,0.55)]">
         {label}
       </p>
     </div>

@@ -57,8 +57,8 @@ export function TextFlywheelTransition({ progress }: TextFlywheelTransitionProps
       <div className="sticky top-0 flex min-h-[100dvh] items-center justify-center overflow-hidden px-6 md:px-[8vw]">
         <div className="absolute inset-0 bg-gradient-to-br from-[rgba(98,62,221,0.08)] to-[rgba(213,81,201,0.04)]" />
         <div ref={stageRef} className="relative z-[2] max-w-[980px] text-center [perspective:1300px] [transform-style:preserve-3d]">
-          <p className="mb-8 text-[0.62rem] font-medium uppercase tracking-[0.3em] text-pp">{STORY_PIVOT_COPY.eyebrow}</p>
-          <blockquote className="font-serif text-[clamp(1.9rem,4vw,4.4rem)] font-light italic leading-tight text-[#D1C1FF] [transform-style:preserve-3d]">
+          <p className="mb-8 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-pp">{STORY_PIVOT_COPY.eyebrow}</p>
+          <blockquote className="font-sans text-[clamp(1.9rem,4vw,2.8rem)] font-bold italic leading-tight text-[#D1C1FF] [transform-style:preserve-3d]">
             {STORY_FLY_THROUGH_WORDS.map((word, i) => (
               <span
                 key={`${word}-${i}`}
@@ -72,7 +72,7 @@ export function TextFlywheelTransition({ progress }: TextFlywheelTransitionProps
               </span>
             ))}
           </blockquote>
-          <p className="mx-auto mt-8 max-w-[620px] text-base font-light leading-relaxed text-[rgba(209,193,255,0.58)]">{STORY_PIVOT_COPY.body}</p>
+          <p className="mx-auto mt-8 max-w-[620px] font-body text-[1.125rem] font-normal leading-relaxed text-[rgba(209,193,255,0.58)]">{STORY_PIVOT_COPY.body}</p>
         </div>
 
         <div

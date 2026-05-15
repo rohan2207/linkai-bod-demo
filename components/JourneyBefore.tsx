@@ -135,13 +135,13 @@ export function JourneyBefore({ progress }: Props) {
         <p className="text-[0.62rem] font-medium uppercase tracking-[0.3em] text-red-300/85">
           Before
         </p>
-        <h2 className="mt-2 font-serif text-[clamp(1.5rem,3.2vw,2.6rem)] font-light leading-tight tracking-tight text-white">
+        <h2 className="mt-2 font-sans text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-tight tracking-tight text-white">
           From <em className="italic text-red-200/90">idea</em> to{" "}
           <em className="italic text-red-200/90">user</em>.
           <br className="hidden md:inline" />
           <span className="text-white/85">One stage at a time.</span>
         </h2>
-        <p className="mx-auto mt-3 max-w-[580px] text-[0.84rem] font-light leading-relaxed text-[rgba(240,236,255,0.72)]">
+        <p className="mx-auto mt-3 max-w-[580px] font-body text-[1rem] font-normal leading-relaxed text-[rgba(240,236,255,0.72)]">
           Each stage waited on the one before it. Six handoffs, six places to stall.
         </p>
       </div>
@@ -246,26 +246,30 @@ export function JourneyBefore({ progress }: Props) {
               {/* Stage label — fades out as morph progresses */}
               <text
                 x={dot.x}
-                y={dot.y + 22}
+                y={dot.y + 24}
                 textAnchor="middle"
-                fontSize={9}
-                fontFamily="'Space Grotesk', system-ui, sans-serif"
-                fontWeight={500}
-                letterSpacing="0.14em"
-                fill="rgba(240,236,255,0.8)"
-                style={{ textTransform: "uppercase", opacity: labelOpacity }}
+                fontSize={11}
+                fontFamily="'Montserrat', system-ui, sans-serif"
+                fontWeight={700}
+                letterSpacing="0.02em"
+                fill="rgba(240,236,255,0.95)"
+                style={{
+                  textTransform: "uppercase",
+                  opacity: labelOpacity,
+                  filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.3))",
+                }}
               >
                 {dot.label}
               </text>
               <text
                 x={dot.x}
-                y={dot.y + 33}
+                y={dot.y + 37}
                 textAnchor="middle"
-                fontSize={8}
-                fontFamily="serif"
-                fontStyle="italic"
-                fill="#D551C9"
-                style={{ opacity: labelOpacity * 0.85 }}
+                fontSize={9}
+                fontFamily="'Montserrat', system-ui, sans-serif"
+                fontWeight={600}
+                fill="#D1C1FF"
+                style={{ opacity: labelOpacity * 0.9 }}
               >
                 {dot.time}
               </text>

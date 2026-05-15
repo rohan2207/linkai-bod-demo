@@ -105,11 +105,13 @@ function SlidePanel({
       <div className="flex items-center gap-3">
         <p
           data-step-layer
-          className="text-[0.62rem] font-semibold uppercase tracking-[0.32em]"
-          style={{ color: accent }}
+          className="font-sans text-[0.75rem] font-extrabold uppercase tracking-[0.32em] text-[#FF8300]"
         >
           {step.eyebrow}
         </p>
+        <span className="badge-shimmer rounded-full px-2.5 py-0.5 font-sans text-[0.65rem] font-bold uppercase tracking-[0.1em] text-[#FF8300]">
+          AI-augmented
+        </span>
         <span
           className="h-px flex-1"
           style={{
@@ -120,7 +122,7 @@ function SlidePanel({
 
       <h2
         data-step-layer
-        className="font-serif text-[clamp(1.65rem,2.7vw,2.5rem)] font-medium leading-[1.08] tracking-tight text-white"
+        className="font-sans text-[clamp(1.65rem,2.7vw,2.5rem)] font-bold leading-[1.08] tracking-tight text-white"
       >
         {headline}
       </h2>
@@ -139,7 +141,7 @@ function SlidePanel({
           {step.bullets.map((b) => (
             <li
               key={b}
-              className="flex items-start gap-3 text-[0.98rem] font-medium leading-snug text-white"
+              className="flex items-start gap-3 font-body text-[1rem] font-medium leading-snug text-white"
             >
               <span
                 className="mt-[0.55rem] size-1.5 shrink-0 rounded-full"
@@ -194,14 +196,14 @@ function SlidePanel({
       ) : null}
 
       <div className="flex flex-wrap items-center gap-1.5 pt-1">
-        <span className="text-[0.55rem] uppercase tracking-[0.24em] text-[rgba(209,193,255,0.4)]">
+        <span className="font-body text-[0.6rem] font-semibold uppercase tracking-[0.24em] text-[rgba(209,193,255,0.4)]">
           Stack
         </span>
         <span className="h-px w-4 bg-[rgba(209,193,255,0.18)]" />
         {step.tools.map((t) => (
           <span
             key={t}
-            className="rounded-sm border px-2 py-0.5 text-[0.6rem] font-medium uppercase tracking-[0.16em]"
+            className="rounded-sm border px-2 py-0.5 font-body text-[0.65rem] font-semibold uppercase tracking-[0.16em]"
             style={{
               borderColor: `${accent}40`,
               color: "rgba(240,236,255,0.78)",

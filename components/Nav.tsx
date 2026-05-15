@@ -6,8 +6,8 @@ export function Nav() {
       <div id="nav-logo-anchor" className="w-[100px] md:w-[110px]">
         <LogoMark className="h-auto w-full" />
       </div>
-      <span className="text-[0.63rem] uppercase tracking-[0.22em] text-[var(--mu)]">
-        Board of Directors · Q1 2026
+      <span className="font-body text-[0.63rem] font-semibold uppercase tracking-[0.22em] text-[var(--mu)]">
+        Board of Directors - Q1 2026
       </span>
     </nav>
   );

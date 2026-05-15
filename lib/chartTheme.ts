@@ -1,6 +1,6 @@
 import type { ChartOptions } from "chart.js";
 
-export const chartFont = "'Space Grotesk', system-ui, sans-serif";
+export const chartFont = "'Montserrat', system-ui, sans-serif";
 
 export const baseChartOptions: ChartOptions<"bar" | "line"> = {
   responsive: true,

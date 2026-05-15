@@ -47,7 +47,7 @@ export function ValidateFrame1() {
             <p className="text-[0.6rem] uppercase tracking-[0.16em] text-[rgba(209,193,255,0.28)]">
               {row.label}
             </p>
-            <p className="font-serif text-[clamp(1.4rem,2.8vw,2rem)] font-light text-[rgba(209,193,255,0.22)] leading-tight">
+            <p className="font-sans text-[clamp(1.4rem,2.8vw,2rem)] font-light text-[rgba(209,193,255,0.22)] leading-tight">
               {row.value}
             </p>
           </div>
@@ -77,7 +77,7 @@ export function ValidateFrame1() {
               {row.label}
             </p>
             <p
-              className="font-serif text-[clamp(1.4rem,2.8vw,2rem)] font-semibold leading-tight text-white"
+              className="font-sans text-[clamp(1.4rem,2.8vw,2rem)] font-semibold leading-tight text-white"
               style={{ textShadow: i < 2 ? `0 0 20px ${ACCENT}55` : undefined }}
             >
               {row.value}
@@ -99,7 +99,7 @@ export function ValidateFrame2() {
       {/* The big number — anchors attention before the eye goes to the chart */}
       <div className="text-center">
         <p
-          className="font-serif text-[clamp(3rem,7vw,5.5rem)] font-bold leading-none tracking-tight"
+          className="font-sans text-[clamp(3rem,7vw,5.5rem)] font-bold leading-none tracking-tight"
           style={{ color: ACCENT, textShadow: `0 0 48px ${ACCENT}66` }}
         >
           +690%

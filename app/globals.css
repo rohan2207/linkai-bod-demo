@@ -3,14 +3,28 @@
 @tailwind utilities;
 
 :root {
+  /* Legacy tokens */
   --pm: #623edd;
   --pp: #d551c9;
   --pa: #f7b334;
   --pg: #4ade80;
-  --nb: #0c0916;
+  --nb: #0A0620;
   --ow: #f0ecff;
   --mu: rgba(209, 193, 255, 0.45);
   --ln: rgba(209, 193, 255, 0.12);
+
+  /* GoodLeap brand tokens */
+  --gl-orange: #FF8300;
+  --gl-yellow: #F7B334;
+  --gl-white: #FFFFFF;
+  --gl-warm-white: #FFFEFC;
+  --gl-passion: #200F51;
+  --gl-grape: #472BA4;
+  --gl-lilac: #D1C1FF;
+  --gl-blush: #EDE6FF;
+  --gl-warm-black: #14140F;
+  --gl-warm-asphalt: #2C2B27;
+  --gl-bg-gradient: radial-gradient(ellipse at top right, #6B1800 0%, #3A0D5C 25%, #200F51 60%, #0A0620 100%);
 }
 
 html {
@@ -31,9 +45,38 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.badge-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 131, 0, 0.12) 0%,
+    rgba(255, 131, 0, 0.3) 40%,
+    rgba(255, 131, 0, 0.12) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+.scroll-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
