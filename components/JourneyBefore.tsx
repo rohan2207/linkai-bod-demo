@@ -200,15 +200,15 @@ export function JourneyBefore({ progress }: Props) {
         className="text-center"
         style={{ opacity: introOpacity, transform: `translateY(${-morph1 * 10}px)` }}
       >
-        <p className="text-[0.62rem] font-medium uppercase tracking-[0.3em] text-red-300/85">
+        <p className="text-[0.78rem] font-semibold uppercase tracking-[0.32em] text-red-300/85">
           Before
         </p>
-        <h2 className="mt-2 font-sans text-[clamp(1.5rem,2.8vw,2.2rem)] font-bold leading-tight tracking-tight text-white">
+        <h2 className="mt-3 font-sans text-[clamp(2.6rem,5.5vw,4.2rem)] font-bold leading-tight tracking-tight text-white">
           From <em className="italic text-red-200/90">idea</em> to{" "}
           <em className="italic text-red-200/90">user</em>.{" "}
           <span className="text-white/80">One stage at a time.</span>
         </h2>
-        <p className="mx-auto mt-2 max-w-[560px] font-body text-[0.95rem] font-normal leading-relaxed text-[rgba(240,236,255,0.68)]">
+        <p className="mx-auto mt-4 max-w-[640px] font-body text-[1.25rem] font-normal leading-relaxed text-[rgba(240,236,255,0.68)]">
           Each stage waited on the one before it. Six handoffs, six places to stall.
         </p>
       </div>
@@ -299,15 +299,15 @@ export function JourneyBefore({ progress }: Props) {
               )}
               <circle
                 cx={dot.x} cy={dot.y}
-                r={isActive ? 5 : 3.5}
+                r={isActive ? 8 : 6}
                 fill={isActive ? "#D551C9" : isDone ? "rgba(213,81,201,0.65)" : "rgba(209,193,255,0.25)"}
                 stroke={isActive ? "#D551C9" : isDone ? "rgba(213,81,201,0.75)" : "rgba(209,193,255,0.3)"}
                 strokeWidth={1}
               />
               {/* Stage labels — only on C1, fade with ghost */}
               <text
-                x={dot.x} y={dot.y + 20}
-                textAnchor="middle" fontSize={9}
+                x={dot.x} y={dot.y + 28}
+                textAnchor="middle" fontSize={14}
                 fontFamily="'Montserrat', system-ui, sans-serif"
                 fontWeight={700} letterSpacing="0.04em"
                 fill="rgba(240,236,255,0.9)"
@@ -322,8 +322,8 @@ export function JourneyBefore({ progress }: Props) {
 
         {/* C1 cycle label */}
         <text
-          x={CX1} y={CY1 - R - 14}
-          textAnchor="middle" fontSize={10}
+          x={CX1} y={CY1 - R - 20}
+          textAnchor="middle" fontSize={15}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={700} fill="#F87171"
           opacity={morph1 * g1op}
@@ -343,7 +343,7 @@ export function JourneyBefore({ progress }: Props) {
         <text
           x={(ARR[0].x1 + ARR[0].x2) / 2 + 10}
           y={(ARR[0].y1 + ARR[0].y2) / 2}
-          textAnchor="start" fontSize={8}
+          textAnchor="start" fontSize={12}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={600} letterSpacing="0.08em"
           fill="rgba(209,193,255,0.45)"
@@ -378,7 +378,7 @@ export function JourneyBefore({ progress }: Props) {
                 />
               )}
               <circle
-                cx={pos.x} cy={pos.y} r={isActive ? 5 : 3.5}
+                cx={pos.x} cy={pos.y} r={isActive ? 8 : 6}
                 fill={isActive ? "#D551C9" : isDone ? "rgba(213,81,201,0.65)" : "rgba(209,193,255,0.25)"}
                 stroke={isActive ? "#D551C9" : isDone ? "rgba(213,81,201,0.75)" : "rgba(209,193,255,0.3)"}
                 strokeWidth={1}
@@ -387,8 +387,8 @@ export function JourneyBefore({ progress }: Props) {
           );
         })}
         <text
-          x={CX2} y={CY2 - R - 14}
-          textAnchor="middle" fontSize={10}
+          x={CX2} y={CY2 - R - 20}
+          textAnchor="middle" fontSize={15}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={700} fill="#D551C9"
           opacity={sweep2 * g2op}
@@ -408,7 +408,7 @@ export function JourneyBefore({ progress }: Props) {
         <text
           x={(ARR[1].x1 + ARR[1].x2) / 2 + 10}
           y={(ARR[1].y1 + ARR[1].y2) / 2}
-          textAnchor="start" fontSize={8}
+          textAnchor="start" fontSize={12}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={600} letterSpacing="0.08em"
           fill="rgba(209,193,255,0.45)"
@@ -443,7 +443,7 @@ export function JourneyBefore({ progress }: Props) {
                 />
               )}
               <circle
-                cx={pos.x} cy={pos.y} r={isActive ? 5 : 3.5}
+                cx={pos.x} cy={pos.y} r={isActive ? 8 : 6}
                 fill={isActive ? "#9B6DFF" : isDone ? "rgba(155,109,255,0.65)" : "rgba(209,193,255,0.25)"}
                 stroke={isActive ? "#9B6DFF" : isDone ? "rgba(155,109,255,0.75)" : "rgba(209,193,255,0.3)"}
                 strokeWidth={1}
@@ -452,8 +452,8 @@ export function JourneyBefore({ progress }: Props) {
           );
         })}
         <text
-          x={CX3} y={CY3 - R - 14}
-          textAnchor="middle" fontSize={10}
+          x={CX3} y={CY3 - R - 20}
+          textAnchor="middle" fontSize={15}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={700} fill="#9B6DFF"
           opacity={sweep3 * g3op}
@@ -473,7 +473,7 @@ export function JourneyBefore({ progress }: Props) {
         <text
           x={(ARR[2].x1 + ARR[2].x2) / 2 + 10}
           y={(ARR[2].y1 + ARR[2].y2) / 2}
-          textAnchor="start" fontSize={8}
+          textAnchor="start" fontSize={12}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={600} letterSpacing="0.08em"
           fill="rgba(209,193,255,0.45)"
@@ -508,7 +508,7 @@ export function JourneyBefore({ progress }: Props) {
                 />
               )}
               <circle
-                cx={pos.x} cy={pos.y} r={isActive ? 5.5 : 4}
+                cx={pos.x} cy={pos.y} r={isActive ? 8 : 6}
                 fill={isActive ? "#9B6DFF" : isDone ? "rgba(155,109,255,0.75)" : "rgba(209,193,255,0.25)"}
                 stroke={isActive ? "#9B6DFF" : isDone ? "rgba(155,109,255,0.85)" : "rgba(209,193,255,0.3)"}
                 strokeWidth={1}
@@ -517,8 +517,8 @@ export function JourneyBefore({ progress }: Props) {
           );
         })}
         <text
-          x={CX4} y={CY4 - R - 14}
-          textAnchor="middle" fontSize={10}
+          x={CX4} y={CY4 - R - 20}
+          textAnchor="middle" fontSize={15}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={700} fill="#9B6DFF"
           opacity={sweep4}
@@ -529,7 +529,7 @@ export function JourneyBefore({ progress }: Props) {
         {/* ── Phase 5: "with every iteration" annotation ── */}
         <text
           x={W / 2} y={H - 18}
-          textAnchor="middle" fontSize={10}
+          textAnchor="middle" fontSize={15}
           fontFamily="'Montserrat', system-ui, sans-serif"
           fontWeight={600} letterSpacing="0.12em"
           fill="rgba(209,193,255,0.45)"
@@ -548,10 +548,10 @@ export function JourneyBefore({ progress }: Props) {
           transform: `translateY(${(1 - afterTextT) * 14}px)`,
         }}
       >
-        <p className="text-[0.62rem] font-medium uppercase tracking-[0.3em] text-[#9B6DFF]">
+        <p className="text-[0.78rem] font-semibold uppercase tracking-[0.32em] text-[#9B6DFF]">
           The loop changes
         </p>
-        <p className="mx-auto mt-3 max-w-[600px] font-sans text-[clamp(1.05rem,2vw,1.4rem)] font-bold leading-snug text-[#D1C1FF]">
+        <p className="mx-auto mt-4 max-w-[680px] font-sans text-[clamp(1.4rem,2.8vw,2rem)] font-bold leading-snug text-[#D1C1FF]">
           {JOURNEY_AFTER_LINE}
         </p>
       </div>
