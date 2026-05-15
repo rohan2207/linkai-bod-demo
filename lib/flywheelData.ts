@@ -124,7 +124,7 @@ export const OUTRO_COPY = {
 export const STORY_SCENE_VH = {
   hero: 140,
   textTransition: 100,
-  flywheel: 420,
+  flywheel: 520,
   heroStat: 80,
   proof: 140,
   outro: 100,
@@ -162,7 +162,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     assetPath: "/assets/pendo-dashboard.png",
     placeholderLabel: "Pendo paths, heatmaps, or screen capture",
     chart: "none",
-    scrollWeight: 2,
+    scrollWeight: 3,
     frames: [
       {
         src: "/assets/discover-pendo-full.png",
@@ -218,7 +218,7 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     assetPath: "/assets/figma-design.png",
     placeholderLabel: "Figma Make frame or prototype capture",
     chart: "none",
-    scrollWeight: 2,
+    scrollWeight: 3,
     frames: [
       {
         src: "/assets/design-prompt.png",

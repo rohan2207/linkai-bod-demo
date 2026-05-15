@@ -70,7 +70,7 @@ export function StepPanel({
     return <ProsePanel step={prevStep} visible={visible} />;
   }
 
-  const isTransitioning = prevIndex !== nextIndex && blend > 0;
+  const showBoth = prevIndex !== nextIndex && !!nextStep;
 
   return (
     <div
@@ -80,33 +80,38 @@ export function StepPanel({
       )}
       aria-live="polite"
     >
-      {/* Outgoing panel — fades out and drifts up as blend increases */}
+      {/*
+       * Outgoing panel — ALWAYS position:relative so it sets the container
+       * height. Fades out / drifts up as blend increases.
+       */}
       <div
         style={{
           opacity: 1 - blend,
           transform: `translateY(${blend * -6}px)`,
-          // Keep in flow when fully visible; absolute when in transition so both stack
-          position: isTransitioning ? "absolute" : "relative",
-          inset: isTransitioning ? 0 : undefined,
           pointerEvents: blend > 0.5 ? "none" : "auto",
-          willChange: isTransitioning ? "opacity, transform" : undefined,
+          willChange: "opacity, transform",
         }}
       >
         <SlidePanel step={prevStep} frameProgress={frameProgress} />
       </div>
 
-      {/* Incoming panel — fades in and rises up as blend increases */}
-      {isTransitioning && nextStep ? (
+      {/*
+       * Incoming panel — ALWAYS position:absolute so it never pushes layout.
+       * Pre-mounted whenever the indices differ (not gated on blend > 0) so
+       * there is zero mount-cost at transition start.
+       */}
+      {showBoth ? (
         <div
           style={{
+            position: "absolute",
+            inset: 0,
             opacity: blend,
             transform: `translateY(${(1 - blend) * 8}px)`,
             pointerEvents: blend <= 0.5 ? "none" : "auto",
             willChange: "opacity, transform",
           }}
         >
-          {/* nextIndex panel shows at frameProgress=0 since it hasn't started yet */}
-          <SlidePanel step={nextStep} frameProgress={0} />
+          <SlidePanel step={nextStep!} frameProgress={0} />
         </div>
       ) : null}
     </div>

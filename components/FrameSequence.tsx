@@ -37,11 +37,11 @@ export function FrameSequence({ frames, progress, accent }: Props) {
       // Raw position within this frame's window (can exceed 0-1)
       const raw = remap(progress, frameStart, frameEnd);
 
-      // Enter: 0→0.20 of the window (faster arrive)
-      const enterT = clamp01(remap(raw, 0, 0.20));
-      // Exit: 0.80→1.0 of the window — symmetric 20% (last frame never exits)
-      // Hold window: 0.20–0.80 = 60% fully visible for board to read
-      const exitT = i < n - 1 ? clamp01(remap(raw, 0.80, 1.0)) : 0;
+      // Enter: 0→0.10 of the window (quick arrive)
+      const enterT = clamp01(remap(raw, 0, 0.10));
+      // Exit: 0.90→1.0 of the window — 10% (last frame never exits)
+      // Hold window: 0.10–0.90 = 80% fully visible so board can read comfortably
+      const exitT = i < n - 1 ? clamp01(remap(raw, 0.90, 1.0)) : 0;
 
       const opacity = enterT * (1 - exitT);
       const translateY = (1 - enterT) * 14 - exitT * 8; // enter from below, exit up
@@ -59,8 +59,8 @@ export function FrameSequence({ frames, progress, accent }: Props) {
       }
       if (cap) {
         // Caption lags slightly behind frame for cinematic stagger
-        const capEnter = clamp01(remap(raw, 0.08, 0.28));
-        const capExit = i < n - 1 ? clamp01(remap(raw, 0.82, 1.0)) : 0;
+        const capEnter = clamp01(remap(raw, 0.08, 0.18));
+        const capExit = i < n - 1 ? clamp01(remap(raw, 0.92, 1.0)) : 0;
         cap.style.opacity = String(capEnter * (1 - capExit));
         cap.style.transform = `translateY(${(1 - capEnter) * 10}px)`;
       }

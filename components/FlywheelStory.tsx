@@ -73,8 +73,13 @@ export function FlywheelStory({ progress }: FlywheelStoryProps) {
     if (dockProgress >= stepBoundaries[i].start) { stepIndex = i; break; }
   }
 
+  const bandStart  = stepBoundaries[stepIndex].start;
   const bandEnd    = stepBoundaries[stepIndex].end;
-  const blendStart = bandEnd - BLEND_WINDOW;
+  const bandWidth  = bandEnd - bandStart;
+  // Cap the blend window to 40 % of the step's band so narrow steps (Deliver,
+  // Operate) always have a meaningful full-content hold before the transition.
+  const effectiveBlendWindow = Math.min(BLEND_WINDOW, bandWidth * 0.4);
+  const blendStart = bandEnd - effectiveBlendWindow;
 
   // blend: 0 = showing prevStep fully, 1 = showing nextStep fully
   const blend = smoothstep01(remap(dockProgress, blendStart, bandEnd));
@@ -84,7 +89,7 @@ export function FlywheelStory({ progress }: FlywheelStoryProps) {
 
   // frameProgress: 0→1 within prevStep's content zone (before blend window)
   const frameProgress = clamp01(
-    remap(dockProgress, stepBoundaries[stepIndex].start, Math.max(stepBoundaries[stepIndex].start + 0.001, blendStart)),
+    remap(dockProgress, bandStart, Math.max(bandStart + 0.001, blendStart)),
   );
 
   // For display indicators, show nextStep as "active" once blend crosses midpoint
