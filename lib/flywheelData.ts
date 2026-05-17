@@ -165,20 +165,14 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
       {
         src: "/assets/discover-pendo-full.png",
         headline: "Pendo: 1,588 session replays",
-        caption: "We can see every path, every hesitation, every drop-off - in real time.",
-        timestamp: "00:07 – 00:18",
-      },
-      {
-        src: "/assets/discover-pendo-zoom.png",
-        headline: "Low engagement detected",
-        caption: "10% active time on the payment step. The data flags it before a PM does.",
-        timestamp: "00:18 – 00:26",
+        caption: "10% active time on the payment step — the data flags it before anyone notices.",
+        timestamp: "00:07 – 00:26",
       },
       {
         src: "/assets/discover-claude-mcp.png",
         headline: "Claude + MCP connects the dots",
-        caption: "Usage, support tickets, and business data - analysed together in seconds.",
-        timestamp: "00:26 – 00:34",
+        caption: "Usage, support tickets, and business data — analysed together in seconds.",
+        timestamp: "00:26 – 00:51",
       },
       {
         src: "/assets/discover-insights.png",
