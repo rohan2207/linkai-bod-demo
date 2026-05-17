@@ -182,9 +182,9 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
       },
       {
         src: "/assets/discover-insights.png",
-        headline: "Insights unlocked",
-        caption: "Evidence-backed brief, ready to act on. Minutes, not days.",
-        timestamp: "00:34 – 00:40",
+        headline: "Pendo → Claude MCP → Jira",
+        caption: "Behavior signals flow straight into AI analysis and land as actionable tickets. End-to-end, no handoff.",
+        timestamp: "00:51 – 00:56",
       },
     ],
   },
