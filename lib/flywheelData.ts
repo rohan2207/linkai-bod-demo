@@ -216,7 +216,21 @@ export const FLYWHEEL_STEPS: FlywheelStep[] = [
     assetPath: "/assets/figma-design.png",
     placeholderLabel: "Figma Make frame or prototype capture",
     chart: "none",
-    scrollWeight: 1,
+    scrollWeight: 2,
+    frames: [
+      {
+        src: "/assets/design-prompt.png",
+        headline: "A prompt, not a brief.",
+        caption: "\"Create a modern loan officer dashboard from this exact LinkAI app.\" That's the entire design spec - sent to Figma Make.",
+        timestamp: "00:00 – 00:12",
+      },
+      {
+        src: "/assets/design-result.png",
+        headline: "Hi-fi in the same session.",
+        caption: "Dashboard, pipeline cards, application progress, next best actions - generated and styled, ready for engineering handoff.",
+        timestamp: "00:12 – 00:34",
+      },
+    ],
   },
   {
     id: "build",
